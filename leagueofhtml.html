@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js"></script>
+<script type="text/javascript" src="https://omlet.me/a/js/omlet.js"></script>
+<script type = "text/javascript" src="index.js"></script>
+<title>League of Lmao</title>
+	<link type = "text/css" rel="stylesheet" href="leagueofhtml.css"/>
+	
+	<body>
+		<div data-role="page" id="home" data-theme="b">
+			<div data-role="main" class="ui-content" data-theme="b">
+				<div id="test"></div>
+				<button class="ui-btn" onclick="test()">test</button>
+				<a href = "#testPage" class = "ui-btn" onclick="loadRunes()">test page</a>
+				<a href="#summonerpage" class="ui-btn">to summoner</a>
+    			<form method="get">
+      			<div class="ui-field-contain">
+        			<input type="search" name="summoner" id="summoner" placeholder="Enter Summoner Name..."> 
+      			</div>
+     				<input type="submit" data-inline="true" value="Submit" onclick="searchSummoner()">
+    			</form>
+    			<p id="league"><center>LEAGUE</center></p>
+				<p id="of"><center> OF </center></p>
+				<p id="lmao"><center>LMAO</center></p>
+    			<a href="#champs" class = "ui-btn">Weekly Free Champs</a>
+    			<a href="#begin" class = "ui-btn">Click for a beginners guide!</a>
+				<a href="#mangs" class = "ui-btn" onclick="pop()">This button is for the League ofLmao</a>
+ 			 </div>
+		</div>
+
+		<div data-role = "page" data-theme="b" id = "testPage">
+			<div data-role = "header">
+				<h1>TEST PAGE</h1>
+			</div>
+			<div data-role="main" class="ui-content" data-theme="b" id="testContent">
+				<ul data-role="listview">
+			  		<li class="ui-li-has-thumb"><a href="acura.html"><img src="thepie1.jpg">
+			  			<h1>butts</h1><p>dicks</p></a>
+			  		</li>
+			  		<li><a href="audi.html">Audi</a></li>
+			  		<li><a href="bmw.html">BMW</a></li>
+				</ul>
+				<br>
+				<button class = "ui-btn" onclick="testList()">test list</button>
+				<button class = "ui-btn" onclick="addPage()">next rune list</button>
+			</div>
+			
+		</div>
+
+		<!-- dynamically add rune pages upon click. -->
+
+		<div data-role="page" id="special" data-theme="b">
+			<p>mang this shit b coming soon dawgs</p>
+			<div data-role="main" class="ui-content" data-theme="b">
+
+			</div>
+			<a href="#vlogs" class = "ui-btn">VLOOOOOOOOGS</a>
+			<a href="#" class="ui-btn" data-rel="back">Back</a>
+		</div>
+
+		<div data-role="page" id="vlogs" data-theme="b"> 
+			<div data-role="header" id="vlogheader">
+				<h1>Vlogs of Lmao</h1>
+			</div>
+
+			<button class="ui-btn" id="share">Share to Omlet</button>
+			<a href="#" class="ui-btn" data-rel="back">Back</a>
+		</div>
+
+		<div data-role="page" id="summonerpage" data-theme="b">
+			<a href="#profile" class = "ui-btn">Profile</a>
+			<a href="#leagues" class = "ui-btn">leagues</a>
+			<a href="#ranked" class = "ui-btn">ranked</a>
+			<a href="#matches" class = "ui-btn">matches</a>
+			<a href="#masteries" class = "ui-btn">masteries</a>
+			<a href="#runes" class = "ui-btn">runes</a>
+			<a href="#" class="ui-btn" data-rel="back">Back</a>
+		</div>
+
+		<div data-role="page" id="champs" data-theme="b">
+			<div data-role="header">
+				<h1>Free Champs MAAAAANGS</h1>
+			</div>
+			<div data-role="main" class = "ui-content" data-theme="b">
+				<p>click each champ for a detailed description</p>
+				<div data-role="content" class="ui-content" data-theme="b">
+					<div data-role="collapsible" id="champ0">
+						<h1 ></h1>
+						<p></p>
+					</div> 
+					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ1">
+						<h1 ></h1>
+						<p></p>
+					</div> 
+					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ2">
+						<h1></h1>
+						<p></p>
+					</div> 
+					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ3">
+						<h1></h1>
+						<p></p>
+					</div> 
+					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ4">
+						<h1></h1>
+						<p></p>
+					</div> 
+					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ5">
+						<h1></h1>
+						<p></p>
+					</div> 
+					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ6">
+						<h1></h1>
+						<p></p>
+					</div> 
+					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ7">
+						<h1></h1>
+						<p></p>
+					</div> 
+					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ8">
+						<h1></h1>
+						<p></p>
+					</div> 
+					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ9">
+						<h1></h1>
+						<p></p>
+					</div> 
+    			</div>
+    			<a href="#allchamps" class = "ui-btn">Click for all the champions</a>
+    			<a href="#" class = "ui-btn" data-rel="back">Back</a>
+			</div>
+		</div>
+		<div data-role = "page" id="champion_data" data-theme = "b">
+			<div data-role ="header" data-theme="b">
+				<h1 id="champ_header"></h1>
+			</div>
+			<div data-role="main" class="">
+			</div>
+		</div>
+
+		<div data-role="page" id="begin" data-theme="b">
+			<div data-role="header" data-theme="b">
+				<h1>Welcome to the Big Dick Club Mang</h1>
+			</div>
+			<div data-role="main" class="ui-content" data-theme="b">
+				<img src="thepie1.jpg" width="300px">
+				<p>Now that we're done with the initiation</p>
+				<a href="#" class = "ui-btn" data-rel="back">Back</a>
+			</div>
+		</div>
+
+		<div data-role="page" id="profile" data-theme="b"> 
+			<div data-role ="header" data-theme="b">
+				<h1 id = "profHead"></h1>
+			</div>
+			<div data-role="main" class = "ui-content" data-theme="b" id="profMain">
+				<div data-role="content" id="profContent">
+					<!-- shit goes in here -->
+				</div>
+				<button class="ui-btn" id="testProfile" onclick="loadProfile()">Test shit</button>
+				<button class="ui-btn" id="share">Share to Omlet</button>
+				<a href="#" class="ui-btn" data-rel="back">Back</a>
+
+			</div>
+		</div>
+
+		<div data-role="page" id="leagues" data-theme="b"> 
+			<div data-role ="header" data-theme="b">
+				<h1 id = "leagueHead"></h1>
+			</div>
+			<a href="#" class="ui-btn" data-rel="back">Back</a>
+			<button class="ui-btn" id="share">Share to Omlet
+			</button>
+		</div>
+
+
+		<div data-role="page" id="ranked" data-theme="b"> 
+			<div data-role ="header" data-theme="b">
+				<h1 id = "rankedHead"></h1>
+			</div>
+			<a href="#" class="ui-btn" data-rel="back">Back</a>
+			<button class="ui-btn" id="share">Share to Omlet</button>
+		</div>
+
+
+		<div data-role="page" id="matches" data-theme="b"> 
+			<div data-role ="header" data-theme="b">
+				<h1 id = "matchHead"></h1>
+			</div>
+			<a href="#" class="ui-btn" data-rel="back">Baack</a>
+			<button class="ui-btn" id="share">Share to Omlet</button>
+		</div>
+
+
+		<div data-role="page" id="masteries" data-theme="b" id="masteryPage"> 
+			<div data-role="header" id ="mastery">
+				<h1 id ="masteryHead"> Masteries</h1>
+			</div>
+			<div data-role  = "main" class = "ui-content" data-theme = "b" id = "masteries">
+
+			</div>
+			<a href="#" class="ui-btn" data-rel="back">Back</a>
+			<button class="ui-btn" id="share">Share to Omlet</button>
+		</div>
+
+		<div data-role="page" id="runes" data-theme="b"> 
+			<div data-role ="header" data-theme="b">
+				<h1 id = "runeHead"></h1>
+			</div>
+			<a href="#" class="ui-btn" data-rel="back">Back</a>
+			<button class="ui-btn" id="share">Share to Omlet</button>
+		</div>
+
+		<div data-role ="page" id="allchamps" data-theme="b">
+			<a href="#" class="ui-btn" data-rel="back">Back</a>
+		</div>
+		
+	</body>
+</html>
