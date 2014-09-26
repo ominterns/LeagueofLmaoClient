@@ -285,6 +285,10 @@ function testList(){
 	
 }
 
+function loadRunes(){
+	
+}
+
 function loadProfile(){
 	
 	var profDiv = document.getElementById("profMain");
