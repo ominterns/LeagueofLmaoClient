@@ -286,13 +286,15 @@ function testList(){
 }
 
 function loadRunes(){
-	
+
 }
 
 function loadProfile(){
 	
 	var profDiv = document.getElementById("profMain");
 	var profHead = document.getElementById("profHead");
+	
+
 	$("#profContent").append('<div data-role = "collapsible-set" id = "profSet" data-content-theme="b"></div>');
 	for(var i = 0; i < player_summary.length; i++){
 		if(player_summary[i]["playerStatSummaryType"] == "Unranked" || player_summary[i]["playerStatSummaryType"] == "RankedSolo5x5" ||player_summary[i]["playerStatSummaryType"] == "RankedTeam5x5" || player_summary[i]["playerStatSummaryType"] == "AramUnranked5x5"){
