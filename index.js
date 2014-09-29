@@ -35,7 +35,7 @@ var variableSummonerName = "b3lik3t";
 $(function () 
 {
 	console.log("hi");
-	var path = local_server + "/league";
+	var path = REAL_SERVER + "/league";
 	//var variableSummonerName = "b3lik3t";
 	var completeData;
 	numberOfPages = 0;
@@ -54,6 +54,7 @@ $(function ()
 		//console.log(reply);
 		console.log("pulling oen piece")
 		organize(keys, reply);
+		console.log(reply["rune_list"]);
 	});	
 } );
 
@@ -171,8 +172,8 @@ function organize(keys, data){
 			for(var key2 in data[key]){
 				for(var key3 in data[key][key2]){
 					if(key3 == "pages"){//pages is an array
-						numberOfPages = data[key][key2][key3].length;
 						rune_output = data[key][key2][key3];
+						console.log(rune_output);
 						//console.log("this guy has " + pagenumber + " rune pages"); 
 						for(var i = 0; i < data[key][key2][key3].length; i++){
 							//console.log(data[key][key2][key3][i]);
@@ -223,10 +224,8 @@ function searchChamp(data_id, list){
 	}
 }
 
-
-var numberOfPages = 0;
 var tableID;
-var rune_output;
+
 // function createTable(data){
 // 	var body = document.getElementsByTagName("body")[0];
 // 	var table = document.createElement("table");
@@ -236,7 +235,6 @@ var rune_output;
 // }
 
 function testList(){
-	console.log("sup");
 	var testDiv = document.createElement("div");
 	testPage.appendChild(testDiv);
 	var unorderedList = document.createElement("ul");
@@ -250,7 +248,7 @@ function testList(){
 
 	$('[id=testUnordered]').attr('data-role', 'listview');
 	$('[id=testUnordered]').addClass('ui-listview');
-
+	console.log(rune_output[0]);
 	for(var i = 0; i < rune_output[0]["slots"].length; i++){
 		var cell = document.createElement("li");
 		cell.setAttribute('id', 'cell');
@@ -324,7 +322,7 @@ function loadProfile(){
 			}
 		} 
 	}
-	$("#profMain").append('<button class="ui-btn" id = "testBtn">TESTING</button>');
+	$("#profMain").append('<button class="ui-btn" id = "test Btn">TESTING</button>');
 
 	$("#profContent").trigger('create');
 
@@ -339,21 +337,34 @@ function createNewDataPage(){
 function loadRunes(){
 	//recursive process to manage runes with different pages
 	//select menu of all rune pages
-	$("#runes").append();
-
+	$("#runes").append('label for="select-choice-0" class="select"> Choose a Rune Page</label><select name = "select-choice-0" id ="options"></select>');
+	for(var i = 0; i < rune_output.length; i++){
+		var runePageID = removeSpace(rune_output[i]["name"]);
+		$("#options").append('<option value ="'+runePageID+'">'+rune_output[i]["name"]+'</option>');
+	}
+	$("#runes").append('<button class ="ui-btn" id="runePageBtn" onclick=refreshList()>Press for Chosen Runes</button>');
+	$("#runes").trigger('create');
 }
-
-function loadMasteries(){
-
-}
-
 var page_number = 0;
 var differentrunes = {};
+var rune_output;
+var rune_page_name;
+function refreshList(){
+	rune_page_name = $("#option option:selected").text();
+	for(var i = 0; i < rune_output.length; i++){
+		if(rune_output[i]["name"] == rune_page_name){
+			var sortedRunes = runeManagement(rune_output[i]["slots"]);
+		}
+	}
+	for(key in sortedRunes){
+		$("#runesMain").append()
+	}
+}
 function runeManagement(data){
 	var count = 0;
 	for(var i = 0; i < data.length - 1; i++){
-		var rune_name1 = searchStatic(rune_output[page_number]["slots"][i]["runeId"], complete_Runes);
-		var rune_name2 = searchStatic(rune_output[page_number]["slots"][i + 1]["runeId"], complete_Runes);
+		var rune_name1 = searchStatic(data[i]["runeId"], complete_Runes);
+		var rune_name2 = searchStatic(data["slots"][i + 1]["runeId"], complete_Runes);
 		if(rune_name1 != rune_name2){
 			differentrunes[rune_name1] = count;
 			count = 0;
@@ -363,5 +374,16 @@ function runeManagement(data){
 	}
 	return differentrunes;
 }
+
+function loadMasteries(){
+
+}
+
+function removeSpace(str){
+	str = str.replace(/\s/g, '');
+	return str;
+}
+
+
 
 var keys = {};
