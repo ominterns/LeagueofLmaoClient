@@ -1,5 +1,6 @@
 var REAL_SERVER = "http://peaceful-river-1294.herokuapp.com";
 var LOCAL_TEST_SERVER = "http://192.169.44.43:5000";
+var local_server = "http://localhost:5000";
 var page_path = LOCAL_TEST_SERVER;
 var page_Name;
 function test(){
@@ -34,7 +35,7 @@ var variableSummonerName = "b3lik3t";
 $(function () 
 {
 	console.log("hi");
-	var path = REAL_SERVER + "/league";
+	var path = local_server + "/league";
 	//var variableSummonerName = "b3lik3t";
 	var completeData;
 	numberOfPages = 0;
@@ -235,6 +236,7 @@ var rune_output;
 // }
 
 function testList(){
+	console.log("sup");
 	var testDiv = document.createElement("div");
 	testPage.appendChild(testDiv);
 	var unorderedList = document.createElement("ul");
@@ -283,10 +285,6 @@ function testList(){
 	//var testPage = document.getElementById('testPage');
 	//console.log(testPage.id);
 	
-}
-
-function loadRunes(){
-
 }
 
 function loadProfile(){
@@ -339,8 +337,16 @@ function createNewDataPage(){
 }
 
 function loadRunes(){
+	//recursive process to manage runes with different pages
+	//select menu of all rune pages
+	$("#runes").append();
 
 }
+
+function loadMasteries(){
+
+}
+
 var page_number = 0;
 var differentrunes = {};
 function runeManagement(data){
