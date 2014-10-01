@@ -31,7 +31,7 @@ function searchSummoner(){
 //	page_Name = page_name;
 // 	path += "/" + page_Name;
 // }
-var variableSummonerName = "b3lik3t";
+var variableSummonerName = "cashinu";
 $(function () 
 {
 	console.log("hi");
@@ -54,7 +54,6 @@ $(function ()
 		//console.log(reply);
 		console.log("pulling oen piece")
 		organize(keys, reply);
-		console.log(reply["rune_list"]);
 	});	
 } );
 
@@ -298,7 +297,7 @@ function loadProfile(){
 
 			if(title == "AramUnranked5x5"){title = "ARAM";}
 			if(title == "Unranked"){ title = "Normal";}
-			if(title == "RankedSolo5x5"){title = "YoloQueue"};
+			if(title == "RankedSolo5x5"){title = "YoloQueue";}
 			if(title == "RankedTeam5x5"){title = "RankedTeam5s";}
 			
 			$("#profSet").append('<div data-role = "collapsible" id = "'+ title +'" data-content-theme="b"></div>');
@@ -322,10 +321,7 @@ function loadProfile(){
 			}
 		} 
 	}
-	$("#profMain").append('<button class="ui-btn" id = "test Btn">TESTING</button>');
-
 	$("#profContent").trigger('create');
-
 	$('[id=profHead]').text(variableSummonerName);
 	console.log("sup " + variableSummonerName);
 }
@@ -337,12 +333,14 @@ function createNewDataPage(){
 function loadRunes(){
 	//recursive process to manage runes with different pages
 	//select menu of all rune pages
-	$("#runes").append('label for="select-choice-0" class="select"> Choose a Rune Page</label><select name = "select-choice-0" id ="options"></select>');
+	$("#runePageHeader").text('Choose a Rune Page');
+	$("#runePageHeader").css("text-align", "center");
+	$("#runes").append('<label for="select-choice-0" class="select"></label> <select name = "select-choice-0" id ="options"></select>');
 	for(var i = 0; i < rune_output.length; i++){
 		var runePageID = removeSpace(rune_output[i]["name"]);
 		$("#options").append('<option value ="'+runePageID+'">'+rune_output[i]["name"]+'</option>');
 	}
-	$("#runes").append('<button class ="ui-btn" id="runePageBtn" onclick=refreshList()>Press for Chosen Runes</button>');
+	$("#runes").append('<button class ="ui-btn" id="runePageBtn" onclick=refreshList()>Press for Runes</button>');
 	$("#runes").trigger('create');
 }
 var page_number = 0;
@@ -350,27 +348,49 @@ var differentrunes = {};
 var rune_output;
 var rune_page_name;
 function refreshList(){
-	rune_page_name = $("#option option:selected").text();
+	console.log("refreshing list");
+	$('#runeList li').remove();
+	$('#runesMain div').remove();
+	rune_page_name = $("#options option:selected").text();
+	$("#runePageHeader").text(rune_page_name);
+	console.log(rune_page_name);
+	var sortedRunes = {};
 	for(var i = 0; i < rune_output.length; i++){
 		if(rune_output[i]["name"] == rune_page_name){
-			var sortedRunes = runeManagement(rune_output[i]["slots"]);
+			sortedRunes = runeManagement(rune_output[i]["slots"]);
 		}
 	}
+	var a = 0;
+	console.log(sortedRunes);
+	$('#runesMain').append('<div id="runeTable"><table data-role="table" data-mode="reflow" id="runeTableStats"><thead>Total Stats from Runes<tr id="runeTableHead""></tr></thead><tbody><tr id="runeTableBody"></tr></tbody></table></div>');
 	for(key in sortedRunes){
-		$("#runesMain").append()
+		$("#runeList").append('<li id="'+a+'">'+key+ '     x' + sortedRunes[key] +'</li>');
+		
+		a++;
 	}
+
+	
+
+	$('#runeList').listview('refresh');
+
 }
+var count = 1;
 function runeManagement(data){
-	var count = 0;
+	count = 1;
+	differentrunes = {};
 	for(var i = 0; i < data.length - 1; i++){
 		var rune_name1 = searchStatic(data[i]["runeId"], complete_Runes);
-		var rune_name2 = searchStatic(data["slots"][i + 1]["runeId"], complete_Runes);
-		if(rune_name1 != rune_name2){
-			differentrunes[rune_name1] = count;
-			count = 0;
-		}else{
+		var rune_name2 = searchStatic(data[i + 1]["runeId"], complete_Runes);
+		console.log(rune_name1["description"] + "   " + rune_name2["name"]); 
+		if(rune_name1 == rune_name2){
 			count++;
+			differentrunes["name"] = rune_name1["name"]
+			differentrunes["name"][rune_name1["name"]] = count;
 		}
+		else{
+			count = 1;
+		}
+		console.log(count + "  " + differentrunes["name"][rune_name1["name"]]);
 	}
 	return differentrunes;
 }
@@ -383,7 +403,5 @@ function removeSpace(str){
 	str = str.replace(/\s/g, '');
 	return str;
 }
-
-
 
 var keys = {};
