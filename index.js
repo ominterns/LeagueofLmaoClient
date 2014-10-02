@@ -31,7 +31,7 @@ function searchSummoner(){
 //	page_Name = page_name;
 // 	path += "/" + page_Name;
 // }
-var variableSummonerName = "cashinu";
+var variableSummonerName = "crystalblu";
 $(function () 
 {
 	console.log("hi");
@@ -194,10 +194,10 @@ function organize(keys, data){
 		if(key == "player_summary"){
 			player_summary = data[key];
 			for(var i  = 0; i < data[key].length; i++){
-				console.log(data[key][i]["playerStatSummaryType"]);
-				console.log(data[key][i]["aggregatedStats"]);
+				//console.log(data[key][i]["playerStatSummaryType"]);
+				//console.log(data[key][i]["aggregatedStats"]);
 				for(key2 in data[key][i]["aggregatedStats"]){
-					console.log(key2 + "      " + data[key][i]["aggregatedStats"][key2]);
+					//console.log(key2 + "      " + data[key][i]["aggregatedStats"][key2]);
 				}
 			}
 		}
@@ -222,17 +222,7 @@ function searchChamp(data_id, list){
 		}
 	}
 }
-
 var tableID;
-
-// function createTable(data){
-// 	var body = document.getElementsByTagName("body")[0];
-// 	var table = document.createElement("table");
-// 	var table_body = document.createElement("tbody");
-// 	for(var i = 0; i < )
-
-// }
-
 function testList(){
 	var testDiv = document.createElement("div");
 	testPage.appendChild(testDiv);
@@ -257,10 +247,8 @@ function testList(){
 		var pID = "parID" + i;
 		var header = document.createElement("h1");
 		header.setAttribute('id',  hID);
-		//console.log(header.id);
 		var par = document.createElement("p");
 		par.setAttribute('id', pID);
-		//console.log(par.id);
 
 		cell.appendChild(setLink);
 		setLink.appendChild(header);
@@ -268,8 +256,6 @@ function testList(){
 		unorderedList.appendChild(cell);
 
 		var rune_name = searchStatic(rune_output[0]["slots"][i]["runeId"], complete_Runes);
-		// $(".headerCLASS")[i].html(rune_name["name"]);
-		// $(".parCLASS")[i].html(rune_name["description"]);
 		$("[id=" + hID + "]").text(rune_name["name"]);
 		$("[id=" + pID + "]").text(rune_name["description"]);
 		
@@ -277,11 +263,6 @@ function testList(){
 		console.log(rune_name["description"]);
 		
 	}
-	//console.log(complete_Runes);
-	//console.log(rune_output);
-	//var testPage = document.getElementById('testPage');
-	//console.log(testPage.id);
-	
 }
 
 function loadProfile(){
@@ -289,7 +270,6 @@ function loadProfile(){
 	var profDiv = document.getElementById("profMain");
 	var profHead = document.getElementById("profHead");
 	
-
 	$("#profContent").append('<div data-role = "collapsible-set" id = "profSet" data-content-theme="b"></div>');
 	for(var i = 0; i < player_summary.length; i++){
 		if(player_summary[i]["playerStatSummaryType"] == "Unranked" || player_summary[i]["playerStatSummaryType"] == "RankedSolo5x5" ||player_summary[i]["playerStatSummaryType"] == "RankedTeam5x5" || player_summary[i]["playerStatSummaryType"] == "AramUnranked5x5"){
@@ -314,7 +294,7 @@ function loadProfile(){
 				if(key == "totalTurretsKilled") head_name = "Total Turret Kills";
 				if(key == "totalNeutralMinionsKilled") head_name = "Total Neutral Minion Kills";
 
-				console.log(key);
+				//console.log(key);
 
 				$("#profTableHead"+i).append('<td>'+ head_name +'</td>');
 				$("#profTableBody"+i).append('<td>'+ player_summary[i]["aggregatedStats"][key] +'</td>');	
@@ -323,11 +303,7 @@ function loadProfile(){
 	}
 	$("#profContent").trigger('create');
 	$('[id=profHead]').text(variableSummonerName);
-	console.log("sup " + variableSummonerName);
-}
-
-function createNewDataPage(){
-
+	//console.log("sup " + variableSummonerName);
 }
 
 function loadRunes(){
@@ -343,8 +319,11 @@ function loadRunes(){
 	$("#runes").append('<button class ="ui-btn" id="runePageBtn" onclick=refreshList()>Press for Runes</button>');
 	$("#runes").trigger('create');
 }
+
 var page_number = 0;
 var differentrunes = {};
+var runeNames = {};
+var runesDescription = {};
 var rune_output;
 var rune_page_name;
 function refreshList(){
@@ -364,34 +343,45 @@ function refreshList(){
 	console.log(sortedRunes);
 	$('#runesMain').append('<div id="runeTable"><table data-role="table" data-mode="reflow" id="runeTableStats"><thead>Total Stats from Runes<tr id="runeTableHead""></tr></thead><tbody><tr id="runeTableBody"></tr></tbody></table></div>');
 	for(key in sortedRunes){
-		$("#runeList").append('<li id="'+a+'">'+key+ '     x' + sortedRunes[key] +'</li>');
-		
+		if(key == "name"){
+			for(key2 in sortedRunes[key]){
+				$("#runeList").append('<li id="'+a+'">'+key2+ '     x  ' + sortedRunes[key][key2] +'</li>');
+			}
+		}
+		if(key == "description"){
+			for(key2 in sortedRunes[key]){
+				$('#runeTableHead').append('<td>'+ sortedRunes[key][key2] +'</td>');
+				$('#runeTableBody').append('<td>'+ sortedRunes[key][key2] +'</td>');
+			}
+		}
 		a++;
 	}
-
-	
-
 	$('#runeList').listview('refresh');
-
+	$('#runesMain').trigger('create');
 }
+
 var count = 1;
 function runeManagement(data){
 	count = 1;
 	differentrunes = {};
+	runesDescription = {};
+	runeNames = {};
 	for(var i = 0; i < data.length - 1; i++){
 		var rune_name1 = searchStatic(data[i]["runeId"], complete_Runes);
 		var rune_name2 = searchStatic(data[i + 1]["runeId"], complete_Runes);
 		console.log(rune_name1["description"] + "   " + rune_name2["name"]); 
 		if(rune_name1 == rune_name2){
 			count++;
-			differentrunes["name"] = rune_name1["name"]
-			differentrunes["name"][rune_name1["name"]] = count;
+			runeNames[rune_name1["name"]] = count;
+			runesDescription[rune_name1["decription"]] = rune_name1["description"];
 		}
 		else{
 			count = 1;
 		}
-		console.log(count + "  " + differentrunes["name"][rune_name1["name"]]);
+		console.log(count + "  " + runeNames[rune_name1["name"]]);
 	}
+	differentrunes["name"] = runeNames;
+	differentrunes["description"] = runesDescription;
 	return differentrunes;
 }
 
