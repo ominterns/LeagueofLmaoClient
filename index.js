@@ -362,7 +362,7 @@ function refreshList(){
 
 var count = 1;
 function runeManagement(data){
-	count = 1;
+	count = 1;7
 	differentrunes = {};
 	runesDescription = {};
 	runeNames = {};
