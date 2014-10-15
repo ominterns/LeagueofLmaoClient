@@ -191,7 +191,7 @@ function organize(keys, data){
 				}
 			}
 		}
-		if(key == "player_summary"){
+		if(key == "player_summary"){//hi
 			player_summary = data[key];
 			for(var i  = 0; i < data[key].length; i++){
 				//console.log(data[key][i]["playerStatSummaryType"]);
@@ -362,7 +362,7 @@ function refreshList(){
 
 var count = 1;
 function runeManagement(data){
-	count = 1;7
+	count = 1;
 	differentrunes = {};
 	runesDescription = {};
 	runeNames = {};
