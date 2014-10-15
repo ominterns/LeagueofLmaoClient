@@ -266,7 +266,7 @@ function testList(){
 }
 
 function loadProfile(){
-	
+	$("#profSet").remove();
 	var profDiv = document.getElementById("profMain");
 	var profHead = document.getElementById("profHead");
 	
@@ -326,38 +326,46 @@ var runeNames = {};
 var runesDescription = {};
 var rune_output;
 var rune_page_name;
+var runeAlive = false;
 function refreshList(){
-	console.log("refreshing list");
-	$('#runeList li').remove();
-	$('#runesMain div').remove();
-	rune_page_name = $("#options option:selected").text();
-	$("#runePageHeader").text(rune_page_name);
-	console.log(rune_page_name);
-	var sortedRunes = {};
-	for(var i = 0; i < rune_output.length; i++){
-		if(rune_output[i]["name"] == rune_page_name){
-			sortedRunes = runeManagement(rune_output[i]["slots"]);
-		}
-	}
-	var a = 0;
-	console.log(sortedRunes);
-	$('#runesMain').append('<div id="runeTable"><table data-role="table" data-mode="reflow" id="runeTableStats"><thead>Total Stats from Runes<tr id="runeTableHead""></tr></thead><tbody><tr id="runeTableBody"></tr></tbody></table></div>');
-	for(key in sortedRunes){
-		if(key == "name"){
-			for(key2 in sortedRunes[key]){
-				$("#runeList").append('<li id="'+a+'">'+key2+ '     x  ' + sortedRunes[key][key2] +'</li>');
+	if(runeAlive == false){
+		runeAlive = true;	
+		console.log("refreshing list");
+		$('#runeList li').remove();
+		$('#runesMain div').remove();
+		$("#runeTable").remove();
+		rune_page_name = $("#options option:selected").text();
+		$("#runePageHeader").text(rune_page_name);
+		console.log(rune_page_name);
+		var sortedRunes = {};
+		for(var i = 0; i < rune_output.length; i++){
+			if(rune_output[i]["name"] == rune_page_name){
+				sortedRunes = runeManagement(rune_output[i]["slots"]);
 			}
 		}
-		if(key == "description"){
-			for(key2 in sortedRunes[key]){
-				$('#runeTableHead').append('<td>'+ sortedRunes[key][key2] +'</td>');
-				$('#runeTableBody').append('<td>'+ sortedRunes[key][key2] +'</td>');
+		var a = 0;
+		console.log(sortedRunes);
+		$('#runesMain').append('<div id="runeTable"><table data-role="table" data-mode="reflow" id="runeTableStats"><thead>Total Stats from Runes<tr id="runeTableHead""></tr></thead><tbody><tr id="runeTableBody"></tr></tbody></table></div>');
+		for(key in sortedRunes){
+			if(key == "name"){
+				for(key2 in sortedRunes[key]){
+					$("#runeList").append('<li id="'+a+'">'+key2+ '     x  ' + sortedRunes[key][key2] +'</li>');
+				}
 			}
+			if(key == "description"){
+				for(key2 in sortedRunes[key]){
+					$('#runeTableHead').append('<td>'+ sortedRunes[key][key2] +'</td>');
+					$('#runeTableBody').append('<td>'+ sortedRunes[key][key2] +'</td>');
+				}
+			}
+			a++;
 		}
-		a++;
+		$('#runeList').listview('refresh');
+		$('#runesMain').trigger('create');
 	}
-	$('#runeList').listview('refresh');
-	$('#runesMain').trigger('create');
+	else{
+		return;
+	}
 }
 
 var count = 1;
@@ -386,7 +394,7 @@ function runeManagement(data){
 }
 
 function loadMasteries(){
-
+	
 }
 
 function loadRecent(){

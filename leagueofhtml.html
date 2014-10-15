@@ -73,12 +73,12 @@
 		</div>
 
 		<div data-role="page" id="summonerpage" data-theme="b">
-			<a href="#profile" class = "ui-btn">Profile</a>
+			<a href="#profile" class = "ui-btn" onclick="loadProfile()">Profile</a>
 			<a href="#leagues" class = "ui-btn">leagues</a>
 			<a href="#ranked" class = "ui-btn">ranked</a>
 			<a href="#matches" class = "ui-btn">matches</a>
 			<a href="#masteries" class = "ui-btn">masteries</a>
-			<a href="#runes" class = "ui-btn">runes</a>
+			<a href="#runes" class = "ui-btn" onclick="loadRunes()">runes</a>
 			<a href="#" class="ui-btn" data-rel="back">Back</a>
 		</div>
 
@@ -161,7 +161,6 @@
 				<div data-role="content" id="profContent">
 					<!-- shit goes in here -->
 				</div>
-				<button class="ui-btn" id="testProfile" onclick="loadProfile()">Test shit</button>
 				<button class="ui-btn" id="share">Share to Omlet</button>
 				<a href="#" class="ui-btn" data-rel="back">Back</a>
 
@@ -214,7 +213,6 @@
 				<h1 id="runePageHeader"></h1>
 				<ul data-role = "listview" id = "runeList"></ul>
 			</div>
-			<button class = "ui-btn" onclick="loadRunes()">Testing Homie</button>
 			<a href="#" class="ui-btn" data-rel="back">Back</a>
 			<button class="ui-btn" id="share">Share to Omlet</button>
 		</div>
