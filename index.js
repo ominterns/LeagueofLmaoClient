@@ -389,6 +389,10 @@ function loadMasteries(){
 
 }
 
+function loadRecent(){
+	
+}
+
 function removeSpace(str){
 	str = str.replace(/\s/g, '');
 	return str;
