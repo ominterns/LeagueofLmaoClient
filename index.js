@@ -45,7 +45,6 @@ function getData()
 	variableSummonerName = $("#summonername").val();
 	summonerName = $("#summonername").val();
 	variableSummonerName = removeSpace(variableSummonerName);
-	variableSummonerName = 
 	console.log("hi " + variableSummonerName);
 	var path = REAL_SERVER + "/league";
 	$.ajax({
