@@ -4,6 +4,12 @@ var LOCAL_TEST_SERVER = "http://192.169.44.43:5000";
 var local_server = "http://localhost:5000";
 var page_path = LOCAL_TEST_SERVER;
 var page_Name;
+var rune_on = false;
+var masteries_on = false;
+var profile_on = false;
+var recent_on = false;
+var matches_on = false;
+var leagues_on = false;
 function test(){
 	var names = "Aatrox Ahri Akali Alistar Amumu Anivia Annie Ashe Blitzcrank Brand Braum Caitlyn Cassiopeia Cho'Gath Corki Darius Diana Dr.Mundo Draven Elize Evelynn Ezreal Fiddlesticks Fiora Fizz Galio Gangplank Garen Gnar Gragas Graves Hecarim Heimerdinger Irelia Janna JarvanIV Jax Jayce Jinx Karma Karthus Kassadin Katarina Kayle Kennen Kha'Zix Kog'Maw LeBlanc LeeSin Leona Lissandra Lucian LuLu Lux Malphite Malzahar Maokai MasterYi MissFortune Mordekaiser Morgana Nami Nasus Nautilus Nocturne Nunu Olaf Orianna Pantheon Poppy Quinn Rammus Renekton Rengar Riven Rumble Ryze Sejuani Shaco Shen Shyvanna Singed Sion Sivir Skarner Sona Soraka Swain Syndra Talon Taric Teemo Thresh Tristana Trundle Tryndamere Twitch Varus Vayne Veigar Vel'Koz Vi Viktor Vladimir Volibear Warwick Wukong Xerath XinZhao Yasuo Yorick Zac Zed Ziggs Zilean Zyra";
 	var newname = names.split(" ");
@@ -32,18 +38,19 @@ function searchSummoner(){
 //	page_Name = page_name;
 // 	path += "/" + page_Name;
 // }
-var variableSummonerName = "crystalblu";
-$(function () 
+var variableSummonerName = "";
+var summonerName = ""
+function getData() 
 {
-	console.log("hi");
+	variableSummonerName = $("#summonername").val();
+	summonerName = $("#summonername").val();
+	variableSummonerName = removeSpace(variableSummonerName);
+	variableSummonerName = 
+	console.log("hi " + variableSummonerName);
 	var path = REAL_SERVER + "/league";
-	//var variableSummonerName = "b3lik3t";
-	var completeData;
-	numberOfPages = 0;
 	$.ajax({
 	 	url: path,
-	 	data: { 
-	 		"complete_summoner_data":completeData,
+	 	data: {
 	        "summoner_name": variableSummonerName
     	},
 	 	context: document.body,
@@ -56,7 +63,7 @@ $(function ()
 		console.log("pulling oen piece")
 		organize(keys, reply);
 	});	
-} );
+}
 
 //MANGNAMGNAGMAGNAGMMANGNAGMANGNAMGNAG
 //have multiple ajax calls and organize data when needed
@@ -327,10 +334,9 @@ var runeNames = {};
 var runesDescription = {};
 var rune_output;
 var rune_page_name;
-var runeAlive = false;
 function refreshList(){
-	if(runeAlive == false){
-		runeAlive = true;	
+	if(rune_on === false){
+		rune_on = true;	
 		console.log("refreshing list");
 		$('#runeList li').remove();
 		$('#runesMain div').remove();
@@ -363,9 +369,6 @@ function refreshList(){
 		}
 		$('#runeList').listview('refresh');
 		$('#runesMain').trigger('create');
-	}
-	else{
-		return;
 	}
 }
 
@@ -402,8 +405,13 @@ function loadRecent(){
 	
 }
 
+function loadLeague(){
+
+}
+
 function removeSpace(str){
 	str = str.replace(/\s/g, '');
+	str = str.replace( /[^a-z]/g, '' );
 	return str;
 }
 

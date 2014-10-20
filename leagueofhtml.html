@@ -18,15 +18,14 @@
 				<button class="ui-btn" onclick="test()">test</button>
 				<a href = "#testPage" class = "ui-btn" onclick="loadRunes()">test page</a>
 				<a href="#summonerpage" class="ui-btn">to summoner</a>
-    			<form method="get">
-      			<div class="ui-field-contain">
-        			<input type="search" name="summoner" id="summoner" placeholder="Enter Summoner Name..."> 
-      			</div>
-     				<input type="submit" data-inline="true" value="Submit" onclick="searchSummoner()">
-    			</form>
-    			<p id="league"><center>LEAGUE</center></p>
+    			<div data-role = "fieldcontain">
+					<label for="summonername">Summoner Name:</label>
+					<input type="text" name="name" id="summonername" value="" />
+				</div>
+				<button id="searchButton" onclick="getData()">Search Summoner</button>
+    			<h1 id="league"><center>LEAGUE</center></h1>
 				<p id="of"><center> OF </center></p>
-				<p id="lmao"><center>LMAO</center></p>
+				<h1 id="lmao"><center>LMAO</center></h1>
     			<a href="#champs" class = "ui-btn">Weekly Free Champs</a>
     			<a href="#begin" class = "ui-btn">Click for a beginners guide!</a>
 				<a href="#mangs" class = "ui-btn" onclick="pop()">This button is for the League ofLmao</a>
@@ -73,6 +72,9 @@
 		</div>
 
 		<div data-role="page" id="summonerpage" data-theme="b">
+			<div data-role ="header">
+				<h1 id="summonerPageHeader">Welcome </h1>
+			</div>
 			<a href="#profile" class = "ui-btn" onclick="loadProfile()">Profile</a>
 			<a href="#leagues" class = "ui-btn">leagues</a>
 			<a href="#ranked" class = "ui-btn">ranked</a>
