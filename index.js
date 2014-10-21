@@ -42,6 +42,7 @@ var variableSummonerName = "";
 var summonerName = ""
 function getData() 
 {
+	clearAll();
 	variableSummonerName = $("#summonername").val();
 	summonerName = $("#summonername").val();
 	variableSummonerName = removeSpace(variableSummonerName);
@@ -49,6 +50,7 @@ function getData()
 	var path = REAL_SERVER + "/league";
 	alert("Searching for " + summonerName + " ...");
 	$.ajax({
+		
 	 	url: path,
 	 	data: {
 	        "summoner_name": variableSummonerName
@@ -276,6 +278,11 @@ function testList(){
 	}
 }
 
+function clearAll(){
+	rune_on = false; masteries_on = false; recent_on = false; profile_on = false; leagues_on = false;
+
+}
+
 function loadProfile(){
 	$("#profSet").remove();
 	var profDiv = document.getElementById("profMain");
@@ -318,11 +325,11 @@ function loadProfile(){
 }
 
 function loadLeague(){
-	
+
 }
 
 function loadRanked(){
-	
+
 }
 
 function loadRecentMatches(){
@@ -415,8 +422,6 @@ function runeManagement(data){
 	differentrunes["description"] = runesDescription;
 	return differentrunes;
 }
-
-
 
 function removeSpace(str){
 	str = str.replace(/\s/g, '');

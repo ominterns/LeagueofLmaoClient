@@ -14,19 +14,81 @@
 	<body>
 		<div data-role="page" id="home" data-theme="b">
 			<div data-role="main" class="ui-content" data-theme="b">
-				<h1 id="league"><center>LEAGUE</center></h1>
-				<p id="of"><center> OF </center></p>
+				<h1 id="league"><center>L     E     A     G     U     E</center></h1>
+				<p id="of"><center> OF </center></p> 
 				<h1 id="lmao"><center>LMAO</center></h1>
     			<div data-role = "fieldcontain">
 					<label for="summonername">Summoner Name:</label>
 					<input type="text" name="name" id="summonername" value="" />
 				</div>
 				<button id="searchButton" onclick="getData()">Search Summoner</button>
+				<br><br><br><br>
     			<h1><center>OH HEY MANG DIDNT SEE YOU THERE MANG</center></h1>
     			<a href="#champs" class = "ui-btn">Weekly Free Champs</a>
     			<a href="#begin" class = "ui-btn">Click for a beginners guide!</a>
 				<a href="#mangs" class = "ui-btn" onclick="pop()">This button is for the League ofLmao</a>
  			 </div>
+		</div>
+
+		<div data-role="page" id="profile" data-theme="b"> <!-- PROFILE SHOULD ADD MORE GAME TIMES-->
+			<div data-role ="header" data-theme="b">
+				<a href="#" data-rel="back">Back</a>
+				<h1 id = "profHead"></h1>
+			</div>
+			<div data-role="main" class = "ui-content" data-theme="b" id="profMain">
+				<div data-role="content" id="profContent">
+					<!-- shit goes in here -->
+				</div>
+				<button class="ui-btn" id="share">Share to Omlet</button>
+				
+			</div>
+		</div>
+
+		<div data-role="page" id="leagues" data-theme="b"> <!-- LEAGUES -->
+			<div data-role ="header" data-theme="b">
+				<a href="#" data-rel="back">Back</a>
+				<h1 id = "leagueHead"></h1>
+			</div>
+			<button class="ui-btn" id="share">Share to Omlet
+			</button>
+		</div>
+
+		<div data-role="page" id="ranked" data-theme="b"> <!-- RANKED -->
+			<div data-role ="header" data-theme="b">
+				<a href="#" data-rel="back">Back</a>
+				<h1 id = "rankedHead"></h1>
+			</div>
+			<button class="ui-btn" id="share">Share to Omlet</button>
+		</div>
+
+		<div data-role="page" id="matches" data-theme="b"> <!-- MATCHES -->
+			<div data-role ="header" data-theme="b">
+				<a href="#" data-rel="back">Back</a>
+				<h1 id = "matchHead">Recent</h1>
+			</div>
+			<button class="ui-btn" id="share">Share to Omlet</button>
+		</div>
+
+		<div data-role="page" id="masteries" data-theme="b" id="masteryPage"> <!-- MASTERIES-->
+			<div data-role="header" id ="mastery">
+				<a href="#" data-rel="back">Back</a>
+				<h1 id ="masteryHead"> Masteries</h1>
+			</div>
+			<div data-role  = "main" class = "ui-content" data-theme = "b" id = "masteries">
+			</div>
+			<button class="ui-btn" id="share">Share to Omlet</button>
+		</div>
+
+		<div data-role="page" id="runes" data-theme="b"> <!-- RUNES GOING TO ADD AGGREGATE STATS-->
+			<div data-role ="header" data-theme="b">
+				<a href="#" data-rel="back">Back</a>
+				<h1 id = "runeHead">RUUUUNES</h1>
+			</div>
+			<div data-role = "main" class = "ui-content" data-theme ="b" id = "runesMain">
+				<h1 id="runePageHeader"></h1>
+				<ul data-role = "listview" id = "runeList"></ul>
+			</div>
+			<button class="ui-btn" id="share">Share to Omlet</button>
 		</div>
 
 		<div data-role = "page" data-theme="b" id = "testPage">
@@ -47,8 +109,6 @@
 			</div>
 			
 		</div>
-
-		<!-- dynamically add rune pages upon click. -->
 
 		<div data-role="page" id="special" data-theme="b">
 			<p>mang this shit b coming soon dawgs</p>
@@ -72,13 +132,15 @@
 			<div data-role ="header">
 				<h1 id="summonerPageHeader"></h1>
 			</div>
-			<a href="#profile" class = "ui-btn" onclick="loadProfile()">Profile</a>
-			<a href="#leagues" class = "ui-btn" onclick = "loadLeague()">Leagues</a>
-			<a href="#ranked" class = "ui-btn" onclick = "loadRanked()">Ranked</a>
-			<a href="#matches" class = "ui-btn" onclick = "loadRecentMatches()">Matches</a>
-			<a href="#masteries" class = "ui-btn" onclick = "loadMasteries()">Masteries</a>
-			<a href="#runes" class = "ui-btn" onclick="loadRunes()">Runes</a>
-			<a href="#" class="ui-btn" data-rel="back">Back</a>
+			<div data-role = "main" class = "ui-content" data-theme="b">
+				<a href="#profile" class = "ui-btn" onclick="loadProfile()">Profile</a>
+				<a href="#leagues" class = "ui-btn" onclick = "loadLeague()">Leagues</a>
+				<a href="#ranked" class = "ui-btn" onclick = "loadRanked()">Ranked</a>
+				<a href="#matches" class = "ui-btn" onclick = "loadRecentMatches()">Matches</a>
+				<a href="#masteries" class = "ui-btn" onclick = "loadMasteries()">Masteries</a>
+				<a href="#runes" class = "ui-btn" onclick="loadRunes()">Runes</a>
+				<a href="#" class="ui-btn" data-rel="back">Back</a>
+			</div>
 		</div>
 
 		<div data-role="page" id="champs" data-theme="b">
@@ -153,69 +215,7 @@
 			</div>
 		</div>
 
-		<div data-role="page" id="profile" data-theme="b"> 
-			<div data-role ="header" data-theme="b">
-				<h1 id = "profHead"></h1>
-			</div>
-			<div data-role="main" class = "ui-content" data-theme="b" id="profMain">
-				<div data-role="content" id="profContent">
-					<!-- shit goes in here -->
-				</div>
-				<button class="ui-btn" id="share">Share to Omlet</button>
-				<a href="#" class="ui-btn" data-rel="back">Back</a>
-
-			</div>
-		</div>
-
-		<div data-role="page" id="leagues" data-theme="b"> 
-			<div data-role ="header" data-theme="b">
-				<h1 id = "leagueHead"></h1>
-			</div>
-			<a href="#" class="ui-btn" data-rel="back">Back</a>
-			<button class="ui-btn" id="share">Share to Omlet
-			</button>
-		</div>
-
-
-		<div data-role="page" id="ranked" data-theme="b"> 
-			<div data-role ="header" data-theme="b">
-				<h1 id = "rankedHead"></h1>
-			</div>
-			<a href="#" class="ui-btn" data-rel="back">Back</a>
-			<button class="ui-btn" id="share">Share to Omlet</button>
-		</div>
-
-
-		<div data-role="page" id="matches" data-theme="b"> 
-			<div data-role ="header" data-theme="b">
-				<h1 id = "matchHead">Recent</h1>
-			</div>
-			<a href="#" class="ui-btn" data-rel="back">Back</a>
-			<button class="ui-btn" id="share">Share to Omlet</button>
-		</div>
-
-
-		<div data-role="page" id="masteries" data-theme="b" id="masteryPage"> 
-			<div data-role="header" id ="mastery">
-				<h1 id ="masteryHead"> Masteries</h1>
-			</div>
-			<div data-role  = "main" class = "ui-content" data-theme = "b" id = "masteries">
-			</div>
-			<a href="#" class="ui-btn" data-rel="back">Back</a>
-			<button class="ui-btn" id="share">Share to Omlet</button>
-		</div>
-
-		<div data-role="page" id="runes" data-theme="b"> 
-			<div data-role ="header" data-theme="b">
-				<h1 id = "runeHead">RUUUUNES</h1>
-			</div>
-			<div data-role = "main" class = "ui-content" data-theme ="b" id = "runesMain">
-				<h1 id="runePageHeader"></h1>
-				<ul data-role = "listview" id = "runeList"></ul>
-			</div>
-			<a href="#" class="ui-btn" data-rel="back">Back</a>
-			<button class="ui-btn" id="share">Share to Omlet</button>
-		</div>
+		
 
 		<div data-role ="page" id="allchamps" data-theme="b">
 			<a href="#" class="ui-btn" data-rel="back">Back</a>
