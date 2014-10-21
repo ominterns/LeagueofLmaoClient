@@ -47,6 +47,7 @@ function getData()
 	variableSummonerName = removeSpace(variableSummonerName);
 	console.log("hi " + variableSummonerName);
 	var path = REAL_SERVER + "/league";
+	alert("Searching for " + summonerName + " ...");
 	$.ajax({
 	 	url: path,
 	 	data: {
@@ -56,12 +57,15 @@ function getData()
 	 	crossDomain: true
 	}).done(function( reply ) {
 		keys = Object.keys(reply);
-		alert("done pulling shit bitch");
+		alert("Player Found!");
 		console.log(keys);
 		//console.log(reply);
 		console.log("pulling oen piece")
 		organize(keys, reply);
+		$.mobile.changePage( "#summonerpage", { transition: "slideup"} );
 	});	
+
+	$("#summonerPageHeader").text("Welcome " + summonerName);
 }
 
 //MANGNAMGNAGMAGNAGMMANGNAGMANGNAMGNAG
@@ -309,22 +313,41 @@ function loadProfile(){
 		} 
 	}
 	$("#profContent").trigger('create');
-	$('[id=profHead]').text(variableSummonerName);
+	$('[id=profHead]').text(summonerName);
 	//console.log("sup " + variableSummonerName);
+}
+
+function loadLeague(){
+	
+}
+
+function loadRanked(){
+	
+}
+
+function loadRecentMatches(){
+	
+}
+
+function loadMasteries(){
+	
 }
 
 function loadRunes(){
 	//recursive process to manage runes with different pages
 	//select menu of all rune pages
-	$("#runePageHeader").text('Choose a Rune Page');
-	$("#runePageHeader").css("text-align", "center");
-	$("#runes").append('<label for="select-choice-0" class="select"></label> <select name = "select-choice-0" id ="options"></select>');
-	for(var i = 0; i < rune_output.length; i++){
-		var runePageID = removeSpace(rune_output[i]["name"]);
-		$("#options").append('<option value ="'+runePageID+'">'+rune_output[i]["name"]+'</option>');
+	if(rune_on === false){
+		rune_on = true;	
+		$("#runePageHeader").text('Choose a Rune Page');
+		$("#runePageHeader").css("text-align", "center");
+		$("#runes").append('<label for="select-choice-0" class="select"></label> <select name = "select-choice-0" id ="options"></select>');
+		for(var i = 0; i < rune_output.length; i++){
+			var runePageID = removeSpace(rune_output[i]["name"]);
+			$("#options").append('<option value ="'+runePageID+'">'+rune_output[i]["name"]+'</option>');
+		}
+		$("#runes").append('<button class ="ui-btn" id="runePageBtn" onclick=refreshList()>Press for Runes</button>');
+		$("#runes").trigger('create');
 	}
-	$("#runes").append('<button class ="ui-btn" id="runePageBtn" onclick=refreshList()>Press for Runes</button>');
-	$("#runes").trigger('create');
 }
 
 var page_number = 0;
@@ -334,41 +357,38 @@ var runesDescription = {};
 var rune_output;
 var rune_page_name;
 function refreshList(){
-	if(rune_on === false){
-		rune_on = true;	
-		console.log("refreshing list");
-		$('#runeList li').remove();
-		$('#runesMain div').remove();
-		$("#runeTable").remove();
-		rune_page_name = $("#options option:selected").text();
-		$("#runePageHeader").text(rune_page_name);
-		console.log(rune_page_name);
-		var sortedRunes = {};
-		for(var i = 0; i < rune_output.length; i++){
-			if(rune_output[i]["name"] == rune_page_name){
-				sortedRunes = runeManagement(rune_output[i]["slots"]);
-			}
+	console.log("refreshing list");
+	$('#runeList li').remove();
+	$('#runesMain div').remove();
+	$("#runeTable").remove();
+	rune_page_name = $("#options option:selected").text();
+	$("#runePageHeader").text(rune_page_name);
+	console.log(rune_page_name);
+	var sortedRunes = {};
+	for(var i = 0; i < rune_output.length; i++){
+		if(rune_output[i]["name"] == rune_page_name){
+			sortedRunes = runeManagement(rune_output[i]["slots"]);
 		}
-		var a = 0;
-		console.log(sortedRunes);
-		$('#runesMain').append('<div id="runeTable"><table data-role="table" data-mode="reflow" id="runeTableStats"><thead>Total Stats from Runes<tr id="runeTableHead""></tr></thead><tbody><tr id="runeTableBody"></tr></tbody></table></div>');
-		for(key in sortedRunes){
-			if(key == "name"){
-				for(key2 in sortedRunes[key]){
-					$("#runeList").append('<li id="'+a+'">'+key2+ '     x  ' + sortedRunes[key][key2] +'</li>');
-				}
-			}
-			if(key == "description"){
-				for(key2 in sortedRunes[key]){
-					$('#runeTableHead').append('<td>'+ sortedRunes[key][key2] +'</td>');
-					$('#runeTableBody').append('<td>'+ sortedRunes[key][key2] +'</td>');
-				}
-			}
-			a++;
-		}
-		$('#runeList').listview('refresh');
-		$('#runesMain').trigger('create');
 	}
+	var a = 0;
+	console.log(sortedRunes);
+	$('#runesMain').append('<div id="runeTable"><table data-role="table" data-mode="reflow" id="runeTableStats"><thead>Total Stats from Runes<tr id="runeTableHead""></tr></thead><tbody><tr id="runeTableBody"></tr></tbody></table></div>');
+	for(key in sortedRunes){
+		if(key == "name"){
+			for(key2 in sortedRunes[key]){
+				$("#runeList").append('<li id="'+a+'">'+key2+ '     x  ' + sortedRunes[key][key2] +'</li>');
+			}
+		}
+		if(key == "description"){
+			for(key2 in sortedRunes[key]){
+				$('#runeTableHead').append('<td>'+ sortedRunes[key][key2] +'</td>');
+				$('#runeTableBody').append('<td>'+ sortedRunes[key][key2] +'</td>');
+			}
+		}
+		a++;
+	}
+	$('#runeList').listview('refresh');
+	$('#runesMain').trigger('create');
 }
 
 var count = 1;
@@ -396,21 +416,11 @@ function runeManagement(data){
 	return differentrunes;
 }
 
-function loadMasteries(){
-	
-}
 
-function loadRecent(){
-	
-}
-
-function loadLeague(){
-
-}
 
 function removeSpace(str){
 	str = str.replace(/\s/g, '');
-	str = str.replace( /[^a-z]/g, '' );
+	str = str.toLowerCase();
 	return str;
 }
 
