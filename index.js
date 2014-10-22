@@ -330,46 +330,45 @@ function loadProfile(){
 }
 
 function loadLeague(){
-
+	
 }
 
 function loadRanked(){
-
-
 
 	for(var key in complete_Ranked){
 		for(var key2 in complete_Ranked[key])
 		console.log("nice "+ complete_Ranked[key][key2]);
 	}
-
-
 	
 }
 var win_loss;
 function loadRecentMatches(){
-	$("#recentContent").append('<div data-role = "collapsible-set" id = "recentSet" data-content-theme="b"></div>');
+	console.log("recent");
+	$("#recentContent").append('<div data-role = "collapsible-set" id = "recentSet" data-content-theme="b" id = "recentSet"></div>');
+	//$("#recentSet").append('<div data-role = "collapsible"><h1>shit nigga</h1></div>');
 	var champPlayed  = "";
-	for(var i = 0; i < complete_Ranked.length; i++){
-		if(complete_Ranked[i]["stats"]["win"] == "true"){
-			win_loss = 'a';
+	var gameType = "";
+	for(var i = 0; i < complete_Recent.length; i++){
+		console.log(complete_Recent[i]);
+		if(complete_Recent[i]["stats"]["win"] === true){
+			win_loss = 'c';
 		} else{
 			win_loss = 'b';
 		}
-		champ = searchChamp(complete_Recent[i]["championId"], complete_Champions);
-		$("#recentSet").append('<div data-role ="collapsible-set" data-theme = "'+win_loss+'" id = "recentGame'+i+'"><h1>'+champ[name]+'</h1></div>');
-		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="kda'+i+'"></div>');
-		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="items'+i+'"></div>');
-		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="stats'+i+'"></div>');
-		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="damageDealt'+i+'"></div>');
-		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="fellowPlayers'+i+'"></div>');
-
-		for(var i = 0; i < 7; i++){//for items collapsible
-
-		}
-
+		champPlayed = searchChamp(complete_Recent[i]["championId"], complete_Champions);
+		gameType = complete_Recent[i]["subType"];
+		if(gameType == "ARAM_UNRANKED_5x5") gameType = "ARAMERINO";
+		console.log(champPlayed + "    " + win_loss);
+		$("#recentSet").append('<div data-role ="collapsible" data-content-theme="'+win_loss+'" id = "recentGame'+i+'"><h1>'+champPlayed+ '     --    '+ gameType +'</h1></div>');
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="kda'+i+'"><h1>KDA</h1></div>');
+		
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="items'+i+'"><h1>Items</h1></div>');
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="stats'+i+'"><h1>Stats</h1></div>');
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="damageDealt'+i+'"><h1>Damage Dealt</h1></div>');
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="fellowPlayers'+i+'"><h1>Fellow Players</h1></div>');
 	}
 	$("#recentContent").trigger('create');
-	console.log(complete_Recent);
+	console.log("done");
 }
 
 function loadMasteries(){
