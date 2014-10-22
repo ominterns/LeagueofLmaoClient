@@ -42,7 +42,7 @@ var variableSummonerName = "";
 var summonerName = ""
 function getData() 
 {
-	clearAll();
+	// clearAll();
 	variableSummonerName = $("#summonername").val();
 	summonerName = $("#summonername").val();
 	variableSummonerName = removeSpace(variableSummonerName);
@@ -79,7 +79,9 @@ var complete_Runes = {};
 var complete_Masteries = {};
 var complete_Sumoner_Spells = {};
 var complete_Items = {};
-var player_summary = {};
+var complete_Profile = {};
+var complete_Ranked = {};
+var complete_Recent = {};
 
 function organize(keys, data){
 	for(var key in data){
@@ -120,11 +122,13 @@ function organize(keys, data){
 			}
 		}
 		if(key == "ranked"){//setup
+			complete_Ranked = data[key];
+			console.log(complete_Ranked);
 			for(var i = 0; i < data[key].length; i++){
-				//console.log("ranked stats");
+				console.log("ranked stats");
 				var champ = searchChamp(data[key][i]["id"], complete_Champions);
 				//console.log(champ);
-				//console.log(data[key][i]["stats"]);
+				console.log(data[key][i]["stats"]);
 			}
 		}
 		if(key == "played_champ"){
@@ -139,10 +143,11 @@ function organize(keys, data){
 		}
 		if(key == "used_item"){
 			for(var key2 in data[key]){
-				console.log();
 			}
 		}
 		if(key == "recent_games"){//setup
+			complete_Recent = data[key];
+			console.log(complete_Recent);
 			for(var i = 0; i < data[key].length; i++){
 				//console.log("recent game stats");
 				var champ = searchChamp(data[key][i]["championId"], complete_Champions);
@@ -205,7 +210,7 @@ function organize(keys, data){
 			}
 		}
 		if(key == "player_summary"){//hi
-			player_summary = data[key];
+			complete_Profile = data[key];
 			for(var i  = 0; i < data[key].length; i++){
 				//console.log(data[key][i]["playerStatSummaryType"]);
 				//console.log(data[key][i]["aggregatedStats"]);
@@ -278,10 +283,10 @@ function testList(){
 	}
 }
 
-function clearAll(){
-	rune_on = false; masteries_on = false; recent_on = false; profile_on = false; leagues_on = false;
+// function clearAll(){
+// 	rune_on = false; masteries_on = false; recent_on = false; profile_on = false; leagues_on = false;
 
-}
+// }
 
 function loadProfile(){
 	$("#profSet").remove();
@@ -289,9 +294,9 @@ function loadProfile(){
 	var profHead = document.getElementById("profHead");
 	
 	$("#profContent").append('<div data-role = "collapsible-set" id = "profSet" data-content-theme="b"></div>');
-	for(var i = 0; i < player_summary.length; i++){
-		if(player_summary[i]["playerStatSummaryType"] == "Unranked" || player_summary[i]["playerStatSummaryType"] == "RankedSolo5x5" ||player_summary[i]["playerStatSummaryType"] == "RankedTeam5x5" || player_summary[i]["playerStatSummaryType"] == "AramUnranked5x5"){
-			var title = player_summary[i]["playerStatSummaryType"];
+	for(var i = 0; i < complete_Profile.length; i++){
+		if(complete_Profile[i]["playerStatSummaryType"] == "Unranked" || complete_Profile[i]["playerStatSummaryType"] == "RankedSolo5x5" || complete_Profile[i]["playerStatSummaryType"] == "RankedTeam5x5" || complete_Profile[i]["playerStatSummaryType"] == "AramUnranked5x5"){
+			var title = complete_Profile[i]["playerStatSummaryType"];
 
 			if(title == "AramUnranked5x5"){title = "ARAM";}
 			if(title == "Unranked"){ title = "Normal";}
@@ -304,7 +309,7 @@ function loadProfile(){
 			$("#"+title+"Table").append('<table data-role="table" id ="profTable"'+i+' data-mode = "reflow"><thead><tr id="profTableHead'+i+'""></tr></thead><tbody><tr id="profTableBody'+i+'"></tr></tbody></table>');
 			var test_count = 0;
 			var head_name = "";
-			for(key in player_summary[i]["aggregatedStats"]){
+			for(key in complete_Profile[i]["aggregatedStats"]){
 				
 				if(key == "totalChampionKills") head_name = "Total Champion Kills";
 				if(key == "totalAssists") head_name = "Total Assists";
@@ -315,7 +320,7 @@ function loadProfile(){
 				//console.log(key);
 
 				$("#profTableHead"+i).append('<td>'+ head_name +'</td>');
-				$("#profTableBody"+i).append('<td>'+ player_summary[i]["aggregatedStats"][key] +'</td>');	
+				$("#profTableBody"+i).append('<td>'+ complete_Profile[i]["aggregatedStats"][key] +'</td>');	
 			}
 		} 
 	}
@@ -329,7 +334,11 @@ function loadLeague(){
 }
 
 function loadRanked(){
-
+	for(var key in complete_Ranked){
+		for(var key2 in complete_Ranked[key])
+		console.log("nice "+ complete_Ranked[key][key2]);
+	}
+	
 }
 
 function loadRecentMatches(){
