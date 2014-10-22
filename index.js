@@ -334,15 +334,42 @@ function loadLeague(){
 }
 
 function loadRanked(){
+
+
+
 	for(var key in complete_Ranked){
 		for(var key2 in complete_Ranked[key])
 		console.log("nice "+ complete_Ranked[key][key2]);
 	}
+
+
 	
 }
-
+var win_loss;
 function loadRecentMatches(){
-	
+	$("#recentContent").append('<div data-role = "collapsible-set" id = "recentSet" data-content-theme="b"></div>');
+	var champPlayed  = "";
+	for(var i = 0; i < complete_Ranked.length; i++){
+		if(complete_Ranked[i]["stats"]["win"] == "true"){
+			win_loss = 'a';
+		} else{
+			win_loss = 'b';
+		}
+		champ = searchChamp(complete_Recent[i]["championId"], complete_Champions);
+		$("#recentSet").append('<div data-role ="collapsible-set" data-theme = "'+win_loss+'" id = "recentGame'+i+'"><h1>'+champ[name]+'</h1></div>');
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="kda'+i+'"></div>');
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="items'+i+'"></div>');
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="stats'+i+'"></div>');
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="damageDealt'+i+'"></div>');
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="fellowPlayers'+i+'"></div>');
+
+		for(var i = 0; i < 7; i++){//for items collapsible
+
+		}
+
+	}
+	$("#recentContent").trigger('create');
+	console.log(complete_Recent);
 }
 
 function loadMasteries(){
