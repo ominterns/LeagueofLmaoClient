@@ -330,7 +330,7 @@ function loadProfile(){
 }
 
 function loadLeague(){
-	
+
 }
 
 function loadRanked(){
@@ -351,7 +351,7 @@ function loadRecentMatches(){
 	for(var i = 0; i < complete_Recent.length; i++){
 		console.log(complete_Recent[i]);
 		if(complete_Recent[i]["stats"]["win"] === true){
-			win_loss = 'c';
+			win_loss = 'a';
 		} else{
 			win_loss = 'b';
 		}
@@ -361,7 +361,7 @@ function loadRecentMatches(){
 		console.log(champPlayed + "    " + win_loss);
 		$("#recentSet").append('<div data-role ="collapsible" data-content-theme="'+win_loss+'" id = "recentGame'+i+'"><h1>'+champPlayed+ '     --    '+ gameType +'</h1></div>');
 		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="kda'+i+'"><h1>KDA</h1></div>');
-		
+		$("#kda"+i).append('<div  ');
 		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="items'+i+'"><h1>Items</h1></div>');
 		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="stats'+i+'"><h1>Stats</h1></div>');
 		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="damageDealt'+i+'"><h1>Damage Dealt</h1></div>');
