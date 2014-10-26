@@ -2,6 +2,7 @@
 var REAL_SERVER = "http://peaceful-river-1294.herokuapp.com";
 var LOCAL_TEST_SERVER = "http://192.169.44.43:5000";
 var local_server = "http://localhost:5000";
+var path2 = local_server+ "/players";
 var page_path = LOCAL_TEST_SERVER;
 var page_Name;
 var rune_on = false;
@@ -47,7 +48,7 @@ function getData()
 	summonerName = $("#summonername").val();
 	variableSummonerName = removeSpace(variableSummonerName);
 	console.log("hi " + variableSummonerName);
-	var path = REAL_SERVER + "/league";
+	var path = local_server + "/league";
 	alert("Searching for " + summonerName + " ...");
 	$.ajax({
 		
@@ -89,7 +90,7 @@ function organize(keys, data){
 			complete_Sumoner_Spells = data[key];
 			for(var key2 in data[key]){
 				//console.log(data["summoner_spell_list"][key2]);
-
+				console.log(complete_Sumoner_Spells);
 			}
 		}
 		if(key == "champions"){
@@ -117,6 +118,7 @@ function organize(keys, data){
 		}
 		if(key == "item_list"){
 			complete_Items = data[key];
+			console.log(complete_Items);
 			for(var key2 in data[key]){
 				//console.log(data["champions"][key2]);
 			}
@@ -155,11 +157,6 @@ function organize(keys, data){
 				//console.log(data[key][i]["stats"]);
 			}
 		}
-		// lolapi call for recent players not working at the moment if(key == "recent_players"){
-		// 	for(var key2 in data[key]){
-		// 		console.log(data["recent_players"][key2]);
-		// 	}
-		// }
 		if(key == "summoner_masteries"){//setup
 			tableID = "masteries";
 			for(var key2 in data[key]){
@@ -233,6 +230,17 @@ function searchStatic(data_id, list){
 		}
 	}
 }
+function searchSummSpell(data_id, list){
+	for(key in list){
+		for(key2 in list[key]){
+			for(key3 in list[key][key2]){
+				if(list[key][key2]["id"] == data_id){
+					return list[key][key2];
+				}
+			}
+		}
+	}
+}
 function searchChamp(data_id, list){
 	for(var key in list){
 		if(list[key]["id"] == data_id){
@@ -241,53 +249,6 @@ function searchChamp(data_id, list){
 	}
 }
 var tableID;
-function testList(){
-	var testDiv = document.createElement("div");
-	testPage.appendChild(testDiv);
-	var unorderedList = document.createElement("ul");
-	unorderedList.setAttribute('id', 'testUnordered');
-	testDiv.appendChild(unorderedList);
-	testDiv.setAttribute('id', 'testList');
-
-	$('[id=testList]').addClass('ui-content ui-page-theme-b');
-	$('[id=testList]').attr('data-role','main');
-	$('[id=testList]').attr('data-theme', 'b');
-
-	$('[id=testUnordered]').attr('data-role', 'listview');
-	$('[id=testUnordered]').addClass('ui-listview');
-	console.log(rune_output[0]);
-	for(var i = 0; i < rune_output[0]["slots"].length; i++){
-		var cell = document.createElement("li");
-		cell.setAttribute('id', 'cell');
-		var setLink = document.createElement("a");
-		setLink.setAttribute('id', 'link');
-		var hID = "headerID" + i;
-		var pID = "parID" + i;
-		var header = document.createElement("h1");
-		header.setAttribute('id',  hID);
-		var par = document.createElement("p");
-		par.setAttribute('id', pID);
-
-		cell.appendChild(setLink);
-		setLink.appendChild(header);
-		setLink.appendChild(par);
-		unorderedList.appendChild(cell);
-
-		var rune_name = searchStatic(rune_output[0]["slots"][i]["runeId"], complete_Runes);
-		$("[id=" + hID + "]").text(rune_name["name"]);
-		$("[id=" + pID + "]").text(rune_name["description"]);
-		
-		console.log(rune_name["name"]);
-		console.log(rune_name["description"]);
-		
-	}
-}
-
-// function clearAll(){
-// 	rune_on = false; masteries_on = false; recent_on = false; profile_on = false; leagues_on = false;
-
-// }
-
 function loadProfile(){
 	$("#profSet").remove();
 	var profDiv = document.getElementById("profMain");
@@ -329,27 +290,31 @@ function loadProfile(){
 	//console.log("sup " + variableSummonerName);
 }
 
-function loadLeague(){
+// function loadLeague(){
 
-}
+// }
 
 function loadRanked(){
 
 	for(var key in complete_Ranked){
 		for(var key2 in complete_Ranked[key])
-		console.log("nice "+ complete_Ranked[key][key2]);
+		console.log(complete_Ranked[key][key2]);
 	}
 	
 }
 var win_loss;
 function loadRecentMatches(){
 	console.log("recent");
-	$("#recentContent").append('<div data-role = "collapsible-set" id = "recentSet" data-content-theme="b" id = "recentSet"></div>');
+	if(recent_on === false){
+		recent_on = true;
+		$("#recentContent").append('<div data-role = "collapsible-set" id = "recentSet" data-content-theme="b" id = "recentSet"></div>');
 	//$("#recentSet").append('<div data-role = "collapsible"><h1>shit nigga</h1></div>');
 	var champPlayed  = "";
 	var gameType = "";
+	var summspell1 = "";
+	var summspell2 = "";
+	
 	for(var i = 0; i < complete_Recent.length; i++){
-		console.log(complete_Recent[i]);
 		if(complete_Recent[i]["stats"]["win"] === true){
 			win_loss = 'a';
 		} else{
@@ -358,19 +323,75 @@ function loadRecentMatches(){
 		champPlayed = searchChamp(complete_Recent[i]["championId"], complete_Champions);
 		gameType = complete_Recent[i]["subType"];
 		if(gameType == "ARAM_UNRANKED_5x5") gameType = "ARAMERINO";
-		console.log(champPlayed + "    " + win_loss);
 		$("#recentSet").append('<div data-role ="collapsible" data-content-theme="'+win_loss+'" id = "recentGame'+i+'"><h1>'+champPlayed+ '     --    '+ gameType +'</h1></div>');
-		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="kda'+i+'"><h1>KDA</h1></div>');
-		$("#kda"+i).append('<div  ');
-		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="items'+i+'"><h1>Items</h1></div>');
+
 		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="stats'+i+'"><h1>Stats</h1></div>');
-		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="damageDealt'+i+'"><h1>Damage Dealt</h1></div>');
+		$("#stats" + i).append('<ul data-role = "listview" id ="statsList'+i+'"></ul>');
+		$("#statsList"+i).append('<li>Kills: '+complete_Recent[i]["stats"]["championsKilled"]+'</li>');
+		$("#statsList"+i).append('<li>Deaths: '+complete_Recent[i]["stats"]["numDeaths"]+'</li>');
+		$("#statsList"+i).append('<li>Assists: '+complete_Recent[i]["stats"]["assists"]+'</li>');
+		$("#statsList"+i).append('<li>Level: '+complete_Recent[i]["stats"]["level"]+'</li>');
+		$("#statsList"+i).append('<li>Gold: '+complete_Recent[i]["stats"]["goldEarned"]+'</li>');
+		summspell1 = searchSummSpell(complete_Recent[i]["spell1"], complete_Sumoner_Spells);
+		summspell2 = searchSummSpell(complete_Recent[i]["spell2"], complete_Sumoner_Spells);
+		$("#statsList"+i).append('<li>Summ. Spells: '+summspell1["name"] + ' , '+ summspell2["name"] +'</li>');
+		
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="items'+i+'"></div>');
+		$("#items"+i).append('<h1>Items</h1>');
+		$("#items"+i).append('<ul data-role = "listview" id = "itemsList'+i+'"></ul>');
+		for(var k = 0; k < 7; k++){
+			var itemUsed = "";
+			if(complete_Recent[i]["stats"]["item"+k] === undefined){ 
+			}else{
+				itemUsed = searchStatic(complete_Recent[i]["stats"]["item"+k], complete_Items);
+				$("#itemsList"+i).append('<li>'+itemUsed["name"]+ '</li>');
+			}
+		}
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="damageDealt'+i+'"><h1>Damage Data</h1></div>');
+		$("#damageDealt"+i).append('<ul data-role = "listview" id = "damageList'+i+'"></ul>');
+		$("#damageList"+i).append('<li>Total Damage: '+complete_Recent[i]["stats"]["totalDamageDealt"]+'</li>');
+		$("#damageList"+i).append('<li>Damage to Champs: '+complete_Recent[i]["stats"]["totalDamageDealtToChampions"]+'</li>');
+		$("#damageList"+i).append('<li>Damage Taken: '+complete_Recent[i]["stats"]["totalDamageTaken"]+'</li>');
+		$("#damageList"+i).append('<li>Magic Damage Dealt: '+complete_Recent[i]["stats"]["magicDamageDealtPlayer"]+'</li>');
+		$("#damageList"+i).append('<li>Physical Damage Dealt: '+complete_Recent[i]["stats"]["physicalDamageDealtPlayer"]+'</li>');
+		$("#damageList"+i).append('<li>Total Heal: '+complete_Recent[i]["stats"]["totalHeal"]+'</li>');
+
 		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="fellowPlayers'+i+'"><h1>Fellow Players</h1></div>');
+		$("#fellowPlayers"+i).append('<ul data-role ="listview" id = "playerList'+i+'"</ul>');
+		for(var z = 0 ; z< complete_Recent[i]["fellowPlayers"].length; z++){
+			playersID.push(complete_Recent[i]["fellowPlayers"][z]["summonerId"]);
+			console.log("holy molly");
+			console.log(playersID);
+		}
+		fellowPLAYers = findPlayerNames(playersID);
+		for(var k = 0; k < playersID.length; k++){
+			console.log("lmao");
+			console.log(fellowPLAYers[k]);
+		}
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="otherChit'+i+'"><h1>Bonusss</h1>Coming SOON</div>');
+		fellowPLAYers = [];
+		playersID = [];
 	}
 	$("#recentContent").trigger('create');
 	console.log("done");
+	}
 }
-
+var playersID = [];
+var fellowPLAYers = [];
+//Player Array
+function findPlayerNames(arr){
+	$.ajax({
+	 	url: path2,
+	 	data: {
+	        "IDs": arr
+    	},
+	 	context: document.body,
+	 	crossDomain: true
+	}).done(function( reply ) {
+		arr = reply;
+	});	
+	return arr;
+}
 function loadMasteries(){
 	
 }
@@ -465,3 +486,45 @@ function removeSpace(str){
 }
 
 var keys = {};
+
+// function testList(){
+// 	var testDiv = document.createElement("div");
+// 	testPage.appendChild(testDiv);
+// 	var unorderedList = document.createElement("ul");
+// 	unorderedList.setAttribute('id', 'testUnordered');
+// 	testDiv.appendChild(unorderedList);
+// 	testDiv.setAttribute('id', 'testList');
+
+// 	$('[id=testList]').addClass('ui-content ui-page-theme-b');
+// 	$('[id=testList]').attr('data-role','main');
+// 	$('[id=testList]').attr('data-theme', 'b');
+
+// 	$('[id=testUnordered]').attr('data-role', 'listview');
+// 	$('[id=testUnordered]').addClass('ui-listview');
+// 	console.log(rune_output[0]);
+// 	for(var i = 0; i < rune_output[0]["slots"].length; i++){
+// 		var cell = document.createElement("li");
+// 		cell.setAttribute('id', 'cell');
+// 		var setLink = document.createElement("a");
+// 		setLink.setAttribute('id', 'link');
+// 		var hID = "headerID" + i;
+// 		var pID = "parID" + i;
+// 		var header = document.createElement("h1");
+// 		header.setAttribute('id',  hID);
+// 		var par = document.createElement("p");
+// 		par.setAttribute('id', pID);
+
+// 		cell.appendChild(setLink);
+// 		setLink.appendChild(header);
+// 		setLink.appendChild(par);
+// 		unorderedList.appendChild(cell);
+
+// 		var rune_name = searchStatic(rune_output[0]["slots"][i]["runeId"], complete_Runes);
+// 		$("[id=" + hID + "]").text(rune_name["name"]);
+// 		$("[id=" + pID + "]").text(rune_name["description"]);
+		
+// 		console.log(rune_name["name"]);
+// 		console.log(rune_name["description"]);
+		
+// 	}
+// }
