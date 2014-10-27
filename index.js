@@ -1,4 +1,4 @@
-//commit again
+//beta version ready
 var REAL_SERVER = "http://peaceful-river-1294.herokuapp.com";
 var LOCAL_TEST_SERVER = "http://192.169.44.43:5000";
 var local_server = "http://localhost:5000";
@@ -538,6 +538,8 @@ function removeSpace(str){
 }
 
 var keys = {};
+
+
 
 // function testList(){
 // 	var testDiv = document.createElement("div");
