@@ -9,7 +9,7 @@ var rune_on = false;
 var masteries_on = false;
 var profile_on = false;
 var recent_on = false;
-var matches_on = false;
+var ranked_on = false;
 var leagues_on = false;
 function test(){
 	var names = "Aatrox Ahri Akali Alistar Amumu Anivia Annie Ashe Blitzcrank Brand Braum Caitlyn Cassiopeia Cho'Gath Corki Darius Diana Dr.Mundo Draven Elize Evelynn Ezreal Fiddlesticks Fiora Fizz Galio Gangplank Garen Gnar Gragas Graves Hecarim Heimerdinger Irelia Janna JarvanIV Jax Jayce Jinx Karma Karthus Kassadin Katarina Kayle Kennen Kha'Zix Kog'Maw LeBlanc LeeSin Leona Lissandra Lucian LuLu Lux Malphite Malzahar Maokai MasterYi MissFortune Mordekaiser Morgana Nami Nasus Nautilus Nocturne Nunu Olaf Orianna Pantheon Poppy Quinn Rammus Renekton Rengar Riven Rumble Ryze Sejuani Shaco Shen Shyvanna Singed Sion Sivir Skarner Sona Soraka Swain Syndra Talon Taric Teemo Thresh Tristana Trundle Tryndamere Twitch Varus Vayne Veigar Vel'Koz Vi Viktor Vladimir Volibear Warwick Wukong Xerath XinZhao Yasuo Yorick Zac Zed Ziggs Zilean Zyra";
@@ -51,7 +51,6 @@ function getData()
 	var path = local_server + "/league";
 	alert("Searching for " + summonerName + " ...");
 	$.ajax({
-		
 	 	url: path,
 	 	data: {
 	        "summoner_name": variableSummonerName
@@ -162,6 +161,8 @@ function organize(keys, data){
 			for(var key2 in data[key]){
 				for(var key3 in data[key][key2]){
 					if(key3 == "pages"){
+						mastery_output = data[key][key2][key3];
+						console.log(mastery_output);
 						numberOfPages = data[key][key2][key3].length;
 						//console.log("this guy has " + pagenumber + " mastery pages");
 						for(var i = 0; i < data[key][key2][key3].length; i++){
@@ -295,12 +296,27 @@ function loadProfile(){
 // }
 
 function loadRanked(){
-
-	for(var key in complete_Ranked){
-		for(var key2 in complete_Ranked[key])
-		console.log(complete_Ranked[key][key2]);
+	var champPlayed = "";
+	var totalGames = 0;
+	if(ranked_on === false){
+		ranked_on = true;
+		$("#rankedContent").append('<div data-role = "collapsible-set" id = "rankedSet" data-content-theme="b"></div>');
+		for(var i = 0; i < complete_Ranked.length - 1; i++){
+			champPlayed = searchChamp(complete_Ranked[i]["id"], complete_Champions);
+			totalGames = complete_Ranked[i]["stats"]["totalSessionsPlayed"];
+			$("#rankedSet").append('<div data-role="collapsible" id ="champ'+i+'"><h1>'+champPlayed+'</h1></div>');
+			$("#champ"+i).append('<ul data-role = "listview" id = "champList'+i+'"></ul>');
+			$("#champList"+i).append('<li>Wins: '+complete_Ranked[i]["stats"]["totalSessionsWon"]+' , Losses: '+complete_Ranked[i]["stats"]["totalSessionsLost"]+'</li>');//winslosses
+			$("#champList"+i).append('<li>Avg. Kills: '+complete_Ranked[i]["stats"]["totalChampionKills"]/totalGames+'</li>');//kills
+			$("#champList"+i).append('<li>Avg. Deaths: '+complete_Ranked[i]["stats"]["totalDeathsPerSession"]/totalGames+'</li>');//deaths
+			$("#champList"+i).append('<li>Avg. Assists: '+complete_Ranked[i]["stats"]["totalAssists"]/totalGames+'</li>');//assists
+			$("#champList"+i).append('<li>Avg. CS: '+complete_Ranked[i]["stats"]["totalMinionKills"]/totalGames+'</li>');//creeps
+			$("#champList"+i).append('<li>Avg. Gold: '+complete_Ranked[i]["stats"]["totalGoldEarned"]/totalGames+'</li>');
+			$("#champList"+i).append('<li>More Stats to Come</li>');
+		}
+	$("#rankedContent").trigger('create');
+	console.log("done ranked");
 	}
-	
 }
 var win_loss;
 function loadRecentMatches(){
@@ -356,18 +372,18 @@ function loadRecentMatches(){
 		$("#damageList"+i).append('<li>Physical Damage Dealt: '+complete_Recent[i]["stats"]["physicalDamageDealtPlayer"]+'</li>');
 		$("#damageList"+i).append('<li>Total Heal: '+complete_Recent[i]["stats"]["totalHeal"]+'</li>');
 
-		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="fellowPlayers'+i+'"><h1>Fellow Players</h1></div>');
-		$("#fellowPlayers"+i).append('<ul data-role ="listview" id = "playerList'+i+'"</ul>');
-		for(var z = 0 ; z< complete_Recent[i]["fellowPlayers"].length; z++){
-			playersID.push(complete_Recent[i]["fellowPlayers"][z]["summonerId"]);
-			console.log("holy molly");
-			console.log(playersID);
-		}
-		fellowPLAYers = findPlayerNames(playersID);
-		for(var k = 0; k < playersID.length; k++){
-			console.log("lmao");
-			console.log(fellowPLAYers[k]);
-		}
+		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="fellowPlayers'+i+'"><h1>Fellow Players</h1>Coming SOON</div>');
+		// $("#fellowPlayers"+i).append('<ul data-role ="listview" id = "playerList'+i+'"</ul>');
+		// for(var z = 0 ; z< complete_Recent[i]["fellowPlayers"].length; z++){
+		// 	playersID.push(complete_Recent[i]["fellowPlayers"][z]["summonerId"]);
+		// 	console.log("holy molly");
+		// 	console.log(playersID);
+		// }
+		// fellowPLAYers.push(findPlayerNames(playersID[z]));
+		// for(var k = 0; k < playersID.length; k++){
+		// 	console.log("lmao");
+		// 	console.log(fellowPLAYers[k]);
+		// }
 		$("#recentGame"+i).append('<div data-role="collapsible" data-theme = "b" id="otherChit'+i+'"><h1>Bonusss</h1>Coming SOON</div>');
 		fellowPLAYers = [];
 		playersID = [];
@@ -379,21 +395,46 @@ function loadRecentMatches(){
 var playersID = [];
 var fellowPLAYers = [];
 //Player Array
-function findPlayerNames(arr){
+function findPlayerNames(id){
+	var name = "";
+	var iD = id;
 	$.ajax({
 	 	url: path2,
 	 	data: {
-	        "IDs": arr
+	        "ID": iD
     	},
 	 	context: document.body,
 	 	crossDomain: true
 	}).done(function( reply ) {
-		arr = reply;
+		name = reply;
 	});	
-	return arr;
+	return name;
 }
+
+var mastery_output;
 function loadMasteries(){
-	
+	if(masteries_on === false){
+		masteries_on = true;
+		$("#").text('Choose a Mastery List');
+		$("#").css("text-align", "center");
+		$("#mastery").append('<label for="select-choice-0" class="select"></label> <select name = "select-choice-0" id ="optionsMast"></select>');
+		for(var i = 0; i < mastery_output.length; i++){
+			var mastPageID = removeSpace(mastery_output[i]["name"]);
+			$("#optionsMast").append('<option value ="'+mastPageID+'">'+mastery_output[i]["name"]+'</option>');
+		}
+		$("#runes").append('<button class ="ui-btn" id = "masteryPageBtn" onclick = "refreshMast()">Press for Masteries</button>');
+		$("#mastery").trigger('create');
+	}
+}
+function refreshMast(){
+	$('#mastList li').remove();
+	$('#mastMain div').remove();
+	$("#mastTable").remove();
+	mast_page_name = $("#optionsMast option:selected").text();
+	var sortedMast = {};
+	for(var i = 0; i < mast_output.length; i++){
+		if()
+	}
 }
 
 function loadRunes(){
@@ -442,12 +483,12 @@ function refreshList(){
 				$("#runeList").append('<li id="'+a+'">'+key2+ '     x  ' + sortedRunes[key][key2] +'</li>');
 			}
 		}
-		if(key == "description"){
-			for(key2 in sortedRunes[key]){
-				$('#runeTableHead').append('<td>'+ sortedRunes[key][key2] +'</td>');
-				$('#runeTableBody').append('<td>'+ sortedRunes[key][key2] +'</td>');
-			}
-		}
+		// if(key == "description"){
+		// 	for(key2 in sortedRunes[key]){
+		// 		$('#runeTableHead').append('<td>'+ sortedRunes[key][key2] +'</td>');
+		// 		$('#runeTableBody').append('<td>'+ sortedRunes[key][key2] +'</td>');
+		// 	}
+		// }
 		a++;
 	}
 	$('#runeList').listview('refresh');
