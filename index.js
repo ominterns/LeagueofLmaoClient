@@ -415,26 +415,37 @@ var mastery_output;
 function loadMasteries(){
 	if(masteries_on === false){
 		masteries_on = true;
-		$("#").text('Choose a Mastery List');
-		$("#").css("text-align", "center");
-		$("#mastery").append('<label for="select-choice-0" class="select"></label> <select name = "select-choice-0" id ="optionsMast"></select>');
+		$("#mastPageHeader").text('Choose a Mastery List');
+		$("#mastPageHeader").css("text-align", "center");
+		$("#masteryContent").append('<label for="select-choice-0" class="select"></label> <select name = "select-choice-0" id ="optionsMast"></select>');
 		for(var i = 0; i < mastery_output.length; i++){
 			var mastPageID = removeSpace(mastery_output[i]["name"]);
 			$("#optionsMast").append('<option value ="'+mastPageID+'">'+mastery_output[i]["name"]+'</option>');
 		}
-		$("#runes").append('<button class ="ui-btn" id = "masteryPageBtn" onclick = "refreshMast()">Press for Masteries</button>');
-		$("#mastery").trigger('create');
+		$("#masteryContent").append('<button class ="ui-btn" id = "masteryPageBtn" onclick = "refreshMast()">Press for Masteries</button>');
+		$("#masteryContent").trigger('create');
 	}
 }
 function refreshMast(){
 	$('#mastList li').remove();
-	$('#mastMain div').remove();
+	$('#masteryContent div').remove();
 	$("#mastTable").remove();
 	mast_page_name = $("#optionsMast option:selected").text();
+	$("#mastPageHeader").text(mast_page_name);
 	var sortedMast = {};
-	for(var i = 0; i < mast_output.length; i++){
-		if()
+	var mastName = "";
+	for(var i = 0; i < mastery_output.length; i++){
+		for(var k = 0; k <mastery_output[i]["masteries"].length; k++){
+			mastName = searchStatic(mastery_output[i]["masteries"][k]["id"], complete_Masteries);
+			$("#mastList").append('<li>'+ mastName["name"] +'<br>Rank: '+mastery_output[i]["masteries"][k]["rank"]+'</li>')
+		}
 	}
+	$("#mastList").listview('refresh');
+	$("#masteryContent").trigger('create');
+}
+
+function masteryManagement(){
+
 }
 
 function loadRunes(){
