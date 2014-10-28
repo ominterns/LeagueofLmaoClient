@@ -2,7 +2,7 @@
 var REAL_SERVER = "http://peaceful-river-1294.herokuapp.com";
 var LOCAL_TEST_SERVER = "http://192.169.44.43:5000";
 var local_server = "http://localhost:5000";
-var path2 = local_server+ "/players";
+var path2 = REAL_SERVER+ "/players";
 var page_path = LOCAL_TEST_SERVER;
 var page_Name;
 var rune_on = false;
@@ -48,7 +48,7 @@ function getData()
 	summonerName = $("#summonername").val();
 	variableSummonerName = removeSpace(variableSummonerName);
 	console.log("hi " + variableSummonerName);
-	var path = local_server + "/league";
+	var path = REAL_SERVER + "/league";
 	alert("Searching for " + summonerName + " ...");
 	$.ajax({
 	 	url: path,
@@ -538,47 +538,3 @@ function removeSpace(str){
 }
 
 var keys = {};
-
-
-
-// function testList(){
-// 	var testDiv = document.createElement("div");
-// 	testPage.appendChild(testDiv);
-// 	var unorderedList = document.createElement("ul");
-// 	unorderedList.setAttribute('id', 'testUnordered');
-// 	testDiv.appendChild(unorderedList);
-// 	testDiv.setAttribute('id', 'testList');
-
-// 	$('[id=testList]').addClass('ui-content ui-page-theme-b');
-// 	$('[id=testList]').attr('data-role','main');
-// 	$('[id=testList]').attr('data-theme', 'b');
-
-// 	$('[id=testUnordered]').attr('data-role', 'listview');
-// 	$('[id=testUnordered]').addClass('ui-listview');
-// 	console.log(rune_output[0]);
-// 	for(var i = 0; i < rune_output[0]["slots"].length; i++){
-// 		var cell = document.createElement("li");
-// 		cell.setAttribute('id', 'cell');
-// 		var setLink = document.createElement("a");
-// 		setLink.setAttribute('id', 'link');
-// 		var hID = "headerID" + i;
-// 		var pID = "parID" + i;
-// 		var header = document.createElement("h1");
-// 		header.setAttribute('id',  hID);
-// 		var par = document.createElement("p");
-// 		par.setAttribute('id', pID);
-
-// 		cell.appendChild(setLink);
-// 		setLink.appendChild(header);
-// 		setLink.appendChild(par);
-// 		unorderedList.appendChild(cell);
-
-// 		var rune_name = searchStatic(rune_output[0]["slots"][i]["runeId"], complete_Runes);
-// 		$("[id=" + hID + "]").text(rune_name["name"]);
-// 		$("[id=" + pID + "]").text(rune_name["description"]);
-		
-// 		console.log(rune_name["name"]);
-// 		console.log(rune_name["description"]);
-		
-// 	}
-// }
