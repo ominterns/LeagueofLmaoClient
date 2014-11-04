@@ -11,14 +11,6 @@ var profile_on = false;
 var recent_on = false;
 var ranked_on = false;
 var leagues_on = false;
-function test(){
-	var names = "Aatrox Ahri Akali Alistar Amumu Anivia Annie Ashe Blitzcrank Brand Braum Caitlyn Cassiopeia Cho'Gath Corki Darius Diana Dr.Mundo Draven Elize Evelynn Ezreal Fiddlesticks Fiora Fizz Galio Gangplank Garen Gnar Gragas Graves Hecarim Heimerdinger Irelia Janna JarvanIV Jax Jayce Jinx Karma Karthus Kassadin Katarina Kayle Kennen Kha'Zix Kog'Maw LeBlanc LeeSin Leona Lissandra Lucian LuLu Lux Malphite Malzahar Maokai MasterYi MissFortune Mordekaiser Morgana Nami Nasus Nautilus Nocturne Nunu Olaf Orianna Pantheon Poppy Quinn Rammus Renekton Rengar Riven Rumble Ryze Sejuani Shaco Shen Shyvanna Singed Sion Sivir Skarner Sona Soraka Swain Syndra Talon Taric Teemo Thresh Tristana Trundle Tryndamere Twitch Varus Vayne Veigar Vel'Koz Vi Viktor Vladimir Volibear Warwick Wukong Xerath XinZhao Yasuo Yorick Zac Zed Ziggs Zilean Zyra";
-	var newname = names.split(" ");
-	for(var i =0; i < newname.length; i++){
-				
-	}
-	console.log(newname);
-}
 function pop(){
 	var lmaoer = prompt("Please Enter Your Summoner Name \n ignore capitals mangs"); 
 	if(lmaoer == "cazookie" || lmaoer == "mattmaster97" || lmaoer == "epicchewy"|| lmaoer == "fiars"|| lmaoer == "cashinu" || lmaoer == "balphi"){
@@ -49,7 +41,7 @@ function getData()
 	variableSummonerName = removeSpace(variableSummonerName);
 	console.log("hi " + variableSummonerName);
 	var path = REAL_SERVER + "/league";
-	alert("Searching for " + summonerName + " ...");
+	alert("Searching for " + summonerName + " ... This might take a while");
 	$.ajax({
 	 	url: path,
 	 	data: {
@@ -538,3 +530,154 @@ function removeSpace(str){
 }
 
 var keys = {};
+
+//Share to Omlet Integration
+
+function shareToOmlet(event){
+	console.log("Sharing game!");
+	if( Omlet.isInstalled() )
+	{
+		// SaveGame();
+		var rdl = Omlet.createRDL({
+                noun: "game",
+                displayTitle: "League of LMAO",
+                displayThumbnailUrl: "http://mobi-summer-luke.s3.amazonaws.com/LeagueofLmaoClient/leagueoflmaothumbnail.png",
+                displayText: "Search for your favorite players! Look at player game data, check out champion rotations and patch updates, and learn all about League of Legends!",  
+                webCallback:  "http://mobi-summer-luke.s3.amazonaws.com/LeagueofLmaoClient/leagueofhtml.html",
+               // json: gameState,
+                callback: encodeURI(window.location.href)
+            });
+      	Omlet.exit(rdl);
+      	console.log("shared!");
+	}
+	else
+	{
+		console.log("woops straight goofin");
+	}
+}
+
+var gameState = {};
+
+function Initialize(old, params) {
+return params;
+}
+
+function Update(old, params) {
+
+	old.gameState = params["gameState"];
+	console.log("Updating!!!");
+	return old;
+}
+
+function InitialDocument() {
+	var initValues = {
+		'creator': Omlet.getIdentity(), 
+      	'gameState': ""
+    };
+  	return initValues;
+}
+
+function DocumentCreated(doc) {
+  	console.log("Document has been created.");
+}
+
+function ReceiveUpdate(doc) {
+	myDoc = doc;
+	for( key in myDoc ){
+		console.log(key);
+  	}
+	console.log( "gameState: " + myDoc["gameState"] );
+	gameState = JSON.parse( myDoc["gameState"] );
+	
+	LoadGame();
+	console.log("I received an update");
+}
+
+function DidNotReceiveUpdate(doc) {
+console.log("I did not receive an update");
+}
+
+//////////////////////////////
+///// Framework Code   ///////
+//////////////////////////////
+
+var documentApi;
+var myDoc;
+var myDocId;
+
+function watchDocument(docref, OnUpdate) {
+	documentApi.watch(docref, function(updatedDocRef) {
+		if (docref != myDocId) {
+			console.log("Wrong document!!");
+		} else {
+	      	documentApi.get(docref, OnUpdate);
+	    }
+	}, function(result) {
+	var timestamp = result.Expires;
+   	var expires = timestamp - new Date().getTime();
+	var timeout = 0.8 * expires;
+	setTimeout(function() {
+  	watchDocument(docref, OnUpdate);
+	}, timeout);
+	}, Error);
+}
+
+function initDocument() {
+if (Omlet.isInstalled()) {
+    	documentApi = Omlet.document;
+    	_loadDocument();
+  	}
+}
+
+function hasDocument() {
+	var docIdParam = window.location.hash.indexOf("/docId/");
+    return (docIdParam != -1);
+}
+
+function getDocumentReference() {
+	var docIdParam = window.location.hash.indexOf("/docId/");
+	if (docIdParam == -1) return false;
+	var docId = window.location.hash.substring(docIdParam+7);
+	var end = docId.indexOf("/");
+	if (end != -1) {
+  	docId = docId.substring(0, end);
+	}
+	return docId;
+}
+
+function _loadDocument() {
+  	if (hasDocument()) {
+    	myDocId = getDocumentReference();
+    	documentApi.get(myDocId, ReceiveUpdate);
+		watchDocument(myDocId, ReceiveUpdate);
+	} else {
+    	documentApi.create(function(d) {
+      	myDocId = d.Document;
+      	location.hash = "#/docId/" + myDocId;
+      	documentApi.update(myDocId, Initialize, InitialDocument(), 
+	function() {
+      	documentApi.get(myDocId, DocumentCreated);
+	}, function(e) {
+      	alert("error: " + JSON.stringify(e));
+    });
+      	watchDocument(myDocId, ReceiveUpdate);
+		}, function(e) {
+  		alert("error: " + JSON.stringify(e));
+		});
+  	}
+}
+
+Omlet.ready(function() {
+	if( hasDocument() )
+	{
+		console.log("I have the document");
+		initDocument();
+	}
+	else
+	{
+		console.log("I do not have the document.");
+		console.log("\t...creating document");
+		initDocument();
+	}
+} );
+

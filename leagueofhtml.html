@@ -11,6 +11,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.3/jquery.mobile.min.js"></script>
 <script type="text/javascript" src="https://omlet.me/a/js/omlet.js"></script>
 <script type = "text/javascript" src="index.js"></script>
+<script type="text/javascript" src="https://omlet.me/a/js/omlet.js"></script>
 <title>League of Lmao</title>
 	<link type = "text/css" rel="stylesheet" href="leagueofhtml.css"/>
 	
@@ -25,11 +26,12 @@
 					<input type="text" name="name" id="summonername" value="" />
 				</div>
 				<button id="searchButton" onclick="getData()">Search Summoner</button>
-				<br><br><br><br>
-    			<h1><center>OH HEY MANG DIDNT SEE YOU THERE MANG</center></h1>
+				<!-- <br><br><br><br>
+    			<h1><center>OH HEY MANG DIDNT SEE YOU THERE MANG</center></h1> -->
     			<a href="#champs" class = "ui-btn">Weekly Free Champs</a>
     			<a href="#begin" class = "ui-btn">Click for a beginners guide!</a>
 				<a href="#mangs" class = "ui-btn" onclick="pop()">This button is for the League ofLmao</a>
+				<button id = "testShareBtn" onclick = "shareToOmlet()">Test Share</button>
  			 </div>
 		</div>
 
@@ -42,7 +44,7 @@
 				<div data-role="content" id="profContent">
 					<!-- shit goes in here -->
 				</div>
-				<button class="ui-btn" id="share">Share to Omlet</button>
+				<button class="ui-btn" id="share" onclick= "shareToOmlet()">Share to Omlet</button>
 				
 			</div>
 		</div>
@@ -53,7 +55,7 @@
 				<h1 id = "leagueHead"></h1>
 			</div>
 			<h1><center>COMING SOON</center></h1>
-			<button class="ui-btn" id="share">Share to Omlet</button>
+			<button class="ui-btn" id="share" onclick= "shareToOmlet()">Share to Omlet</button>
 		</div>
 
 		<div data-role="page" id="ranked" data-theme="b"> <!-- RANKED -->
@@ -64,7 +66,7 @@
 			<div data-role ="main" class = "ui-content" data-theme = "b" id = "rankedContent">
 				<p><center>Season 4 Stats</center></p>
 			</div>
-			<button class="ui-btn" id="share">Share to Omlet</button>
+			<button class="ui-btn" id="share" onclick= "shareToOmlet()">Share to Omlet</button>
 		</div>
 
 		<div data-role="page" id="matches" data-theme="b"> <!-- MATCHES -->
@@ -73,9 +75,9 @@
 				<h1 id = "matchHead">Recent</h1>
 			</div>
 			<div data-role ="main" class = "ui-content" data-theme = "b" id = "recentContent">
-				<p>White = Win      Black = Loss</p>
+				<p><center>White Border= Win / Black = Lose</center></p>
 			</div>
-			<button class="ui-btn" id="share">Share to Omlet</button>
+			<button class="ui-btn" id="share" onclick= "shareToOmlet()">Share to Omlet</button>
 		</div>
 
 		<div data-role="page" id="masteries" data-theme="b" id="masteryPage"> <!-- MASTERIES-->
@@ -87,7 +89,7 @@
 				<h1 id="mastPageHeader"></h1>
 				<ul data-role = "listview" id = "mastList"></ul>
 			</div>
-			<button class="ui-btn" id="share">Share to Omlet</button>
+			<button class="ui-btn" id="share" onclick= "shareToOmlet()">Share to Omlet</button>
 		</div>
 
 		<div data-role="page" id="runes" data-theme="b"> <!-- RUNES GOING TO ADD AGGREGATE STATS-->
@@ -99,7 +101,7 @@
 				<h1 id="runePageHeader"></h1>
 				<ul data-role = "listview" id = "runeList"></ul>
 			</div>
-			<button class="ui-btn" id="share">Share to Omlet</button>
+			<button class="ui-btn" id="share" onclick= "shareToOmlet()">Share to Omlet</button>
 		</div>
 
 		<div data-role = "page" data-theme="b" id = "testPage">
@@ -141,6 +143,7 @@
 
 		<div data-role="page" id="summonerpage" data-theme="b">
 			<div data-role ="header">
+				<a href="#" class="ui-btn" data-rel="back">Back</a>
 				<h1 id="summonerPageHeader"></h1>
 			</div>
 			<div data-role = "main" class = "ui-content" data-theme="b">
@@ -150,7 +153,7 @@
 				<a href="#matches" class = "ui-btn" onclick="loadRecentMatches()">Matches</a>
 				<a href="#masteries" class = "ui-btn" onclick="loadMasteries()">Masteries</a>
 				<a href="#runes" class = "ui-btn" onclick="loadRunes()">Runes</a>
-				<a href="#" class="ui-btn" data-rel="back">Back</a>
+				
 			</div>
 		</div>
 
