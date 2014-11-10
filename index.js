@@ -52,9 +52,9 @@ function getData()
 	}).done(function( reply ) {
 		keys = Object.keys(reply);
 		alert("Player Found!");
-		console.log(keys);
+		//console.log(keys);
 		//console.log(reply);
-		console.log("pulling oen piece")
+		//console.log("pulling oen piece")
 		organize(keys, reply);
 		$.mobile.changePage( "#summonerpage", { transition: "slideup"} );
 	});	
@@ -116,12 +116,12 @@ function organize(keys, data){
 		}
 		if(key == "ranked"){//setup
 			complete_Ranked = data[key];
-			console.log(complete_Ranked);
+			//console.log(complete_Ranked);
 			for(var i = 0; i < data[key].length; i++){
-				console.log("ranked stats");
+				//console.log("ranked stats");
 				var champ = searchChamp(data[key][i]["id"], complete_Champions);
 				//console.log(champ);
-				console.log(data[key][i]["stats"]);
+				//console.log(data[key][i]["stats"]);
 			}
 		}
 		if(key == "played_champ"){
@@ -140,7 +140,7 @@ function organize(keys, data){
 		}
 		if(key == "recent_games"){//setup
 			complete_Recent = data[key];
-			console.log(complete_Recent);
+			//console.log(complete_Recent);
 			for(var i = 0; i < data[key].length; i++){
 				//console.log("recent game stats");
 				var champ = searchChamp(data[key][i]["championId"], complete_Champions);
@@ -154,7 +154,7 @@ function organize(keys, data){
 				for(var key3 in data[key][key2]){
 					if(key3 == "pages"){
 						mastery_output = data[key][key2][key3];
-						console.log(mastery_output);
+						//console.log(mastery_output);
 						numberOfPages = data[key][key2][key3].length;
 						//console.log("this guy has " + pagenumber + " mastery pages");
 						for(var i = 0; i < data[key][key2][key3].length; i++){
@@ -180,7 +180,7 @@ function organize(keys, data){
 				for(var key3 in data[key][key2]){
 					if(key3 == "pages"){//pages is an array
 						rune_output = data[key][key2][key3];
-						console.log(rune_output);
+						//console.log(rune_output);
 						//console.log("this guy has " + pagenumber + " rune pages"); 
 						for(var i = 0; i < data[key][key2][key3].length; i++){
 							//console.log(data[key][key2][key3][i]);
@@ -307,12 +307,12 @@ function loadRanked(){
 			$("#champList"+i).append('<li>More Stats to Come</li>');
 		}
 	$("#rankedContent").trigger('create');
-	console.log("done ranked");
+	//console.log("done ranked");
 	}
 }
 var win_loss;
 function loadRecentMatches(){
-	console.log("recent");
+	//console.log("recent");
 	if(recent_on === false){
 		recent_on = true;
 		$("#recentContent").append('<div data-role = "collapsible-set" id = "recentSet" data-content-theme="b" id = "recentSet"></div>');
@@ -381,7 +381,7 @@ function loadRecentMatches(){
 		playersID = [];
 	}
 	$("#recentContent").trigger('create');
-	console.log("done");
+	//console.log("done");
 	}
 }
 var playersID = [];
@@ -652,7 +652,7 @@ function _loadDocument() {
 		watchDocument(myDocId, ReceiveUpdate);
 	} else {
     	documentApi.create(function(d) {
-      	myDocId = d.Document;
+      	myDocId = d.Document;33
       	location.hash = "#/docId/" + myDocId;
       	documentApi.update(myDocId, Initialize, InitialDocument(), 
 	function() {
