@@ -27,10 +27,10 @@
 				<button id="searchButton" onclick="getData()">Search Summoner</button>
 				<!-- <br><br><br><br>
     			<h1><center>OH HEY MANG DIDNT SEE YOU THERE MANG</center></h1> -->
-    			<a href="#champs" class = "ui-btn">Weekly Free Champs</a>
+    			<a href="#champs" class = "ui-btn" onclick = "loadFreeChamps()">Weekly Free Champs</a>
     			<a href="#begin" class = "ui-btn">Click for a beginners guide!</a>
 				<a href="#mangs" class = "ui-btn" onclick="pop()">This button is for the League ofLmao</a>
-				<button id = "testShareBtn" onclick = "shareToOmlet()">Test Share</button>
+				<button id = "testShareBtn" onclick = "shareToOmlet()">Share to Omlet</button>
  			 </div>
 		</div>
 
@@ -123,21 +123,25 @@
 		</div>
 
 		<div data-role="page" id="special" data-theme="b">
+			<div data-role = "header" id="lmaoHeader">
+				<a href="#" class="ui-btn" data-rel="back">Back</a>
+				<h1>LMAOOOO</h1>
+			</div>
 			<p>mang this shit b coming soon dawgs</p>
 			<div data-role="main" class="ui-content" data-theme="b">
 
 			</div>
 			<a href="#vlogs" class = "ui-btn">VLOOOOOOOOGS</a>
-			<a href="#" class="ui-btn" data-rel="back">Back</a>
+			
 		</div>
 
 		<div data-role="page" id="vlogs" data-theme="b"> 
 			<div data-role="header" id="vlogheader">
+				<a href="#" class="ui-btn" data-rel="back">Back</a>
 				<h1>Vlogs of Lmao</h1>
 			</div>
-
 			<button class="ui-btn" id="share">Share to Omlet</button>
-			<a href="#" class="ui-btn" data-rel="back">Back</a>
+			
 		</div>
 
 		<div data-role="page" id="summonerpage" data-theme="b">
@@ -152,65 +156,19 @@
 				<a href="#matches" class = "ui-btn" onclick="loadRecentMatches()">Matches</a>
 				<a href="#masteries" class = "ui-btn" onclick="loadMasteries()">Masteries</a>
 				<a href="#runes" class = "ui-btn" onclick="loadRunes()">Runes</a>
-				
 			</div>
 		</div>
 
 		<div data-role="page" id="champs" data-theme="b">
 			<div data-role="header">
+				<a href="#" class = "ui-btn" data-rel="back">Back</a>
 				<h1>Free Champs MAAAAANGS</h1>
 			</div>
-			<div data-role= "main" class= "ui-content" data-theme = "b">
+			<div data-role= "main" class= "ui-content" data-theme = "b" id= "champRotPage">
+
 			</div>
 			<h1>Champion Page Coming Soon</h1>
-			<!-- <div data-role="main" class = "ui-content" data-theme="b">
-				<p>click each champ for a detailed description</p>
-				<div data-role="content" class="ui-content" data-theme="b">
-					<div data-role="collapsible" id="champ0">
-						<h1 ></h1>
-						<p></p>
-					</div> 
-					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ1">
-						<h1 ></h1>
-						<p></p>
-					</div> 
-					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ2">
-						<h1></h1>
-						<p></p>
-					</div> 
-					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ3">
-						<h1></h1>
-						<p></p>
-					</div> 
-					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ4">
-						<h1></h1>
-						<p></p>
-					</div> 
-					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ5">
-						<h1></h1>
-						<p></p>
-					</div> 
-					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ6">
-						<h1></h1>
-						<p></p>
-					</div> 
-					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ7">
-						<h1></h1>
-						<p></p>
-					</div> 
-					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ8">
-						<h1></h1>
-						<p></p>
-					</div> 
-					<div data-role="collapsible" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" id="champ9">
-						<h1></h1>
-						<p></p>
-					</div> 
-    			</div>
-    			<a href="#allchamps" class = "ui-btn">Click for all the champions</a> -->
-    			<a href="#" class = "ui-btn" data-rel="back">Back</a>
-			<!-- </div>
- -->		</div>
+	</div>
 		<div data-role = "page" id="champion_data" data-theme = "b">
 			<div data-role ="header" data-theme="b">
 				<h1 id="champ_header"></h1>
@@ -229,8 +187,6 @@
 				<a href="#" class = "ui-btn" data-rel="back">Back</a>
 			</div>
 		</div>
-
-		
 
 		<div data-role ="page" id="allchamps" data-theme="b">
 			<a href="#" class="ui-btn" data-rel="back">Back</a>

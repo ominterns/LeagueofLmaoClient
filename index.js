@@ -2,7 +2,7 @@
 var REAL_SERVER = "http://peaceful-river-1294.herokuapp.com";
 var LOCAL_TEST_SERVER = "http://192.169.44.43:5000";
 var local_server = "http://localhost:5000";
-var path2 = REAL_SERVER+ "/players";
+var path2 = REAL_SERVER + "/players";
 var page_path = LOCAL_TEST_SERVER;
 var page_Name;
 var rune_on = false;
@@ -11,6 +11,26 @@ var profile_on = false;
 var recent_on = false;
 var ranked_on = false;
 var leagues_on = false;
+
+$(function(){
+	getFreeChamps();
+});
+
+function getFreeChamps() 
+{
+	var path = REAL_SERVER + "/freechamps";
+	$.ajax({
+	 	url: path,
+	 	data: {
+	        
+    	},
+	 	context: document.body,
+	 	crossDomain: true
+	}).done(function( reply ) {
+		console.log(reply);
+	});	
+}
+
 function pop(){
 	var lmaoer = prompt("Please Enter Your Summoner Name \n ignore capitals mangs"); 
 	if(lmaoer == "cazookie" || lmaoer == "mattmaster97" || lmaoer == "epicchewy"|| lmaoer == "fiars"|| lmaoer == "cashinu" || lmaoer == "balphi"){
@@ -67,6 +87,7 @@ function getData()
 
 //collective lists
 var complete_Champions = {};
+var incomplete_Champions = {};
 var complete_Runes = {};
 var complete_Masteries = {};
 var complete_Sumoner_Spells = {};
@@ -85,12 +106,14 @@ function organize(keys, data){
 			}
 		}
 		if(key == "champions"){
+			incomplete_Champions = data[key];
 			for(var key2 in data[key]){
-				//console.log(data["champions"][key2]);
+				console.log(data["champions"][key2]);
 			}
 		}
 		if(key == "champ_names_des"){
 			complete_Champions = data[key];
+			console.log(complete_Champions);
 			for(var key2 in data[key]){
 				//console.log(data["champions"][key2]);
 			}
@@ -109,7 +132,7 @@ function organize(keys, data){
 		}
 		if(key == "item_list"){
 			complete_Items = data[key];
-			console.log(complete_Items);
+			//console.log(complete_Items);
 			for(var key2 in data[key]){
 				//console.log(data["champions"][key2]);
 			}
@@ -238,6 +261,13 @@ function searchChamp(data_id, list){
 	for(var key in list){
 		if(list[key]["id"] == data_id){
 			return list[key]["name"];
+		}
+	}
+}
+function searchChamp2(data_id, list){
+	for(var key in list){
+		if(list[key]["id"] == data_id){
+			return list[key];
 		}
 	}
 }
@@ -398,6 +428,7 @@ function findPlayerNames(id){
 	 	context: document.body,
 	 	crossDomain: true
 	}).done(function( reply ) {
+		console.log(reply);
 		name = reply;
 	});	
 	return name;
@@ -521,6 +552,16 @@ function runeManagement(data){
 	differentrunes["name"] = runeNames;
 	differentrunes["description"] = runesDescription;
 	return differentrunes;
+}
+
+function loadFreeChamps(){
+	for(var key in incomplete_Champions){
+		if(incomplete_Champions[key]["freeToPlay"] === false){
+			var champ = searchChamp2(incomplete_Champions[key]["id"], complete_Champions);
+			console.log(champ);
+			//$('#champRotPage').append('<div></div>');
+		}
+	}
 }
 
 function removeSpace(str){
@@ -680,4 +721,6 @@ Omlet.ready(function() {
 		initDocument();
 	}
 } );
+
+
 
