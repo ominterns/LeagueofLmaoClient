@@ -27,6 +27,7 @@ function getFreeChamps()
 	 	context: document.body,
 	 	crossDomain: true
 	}).done(function( reply ) {
+		alert("done");
 		console.log(reply);
 	});	
 }
