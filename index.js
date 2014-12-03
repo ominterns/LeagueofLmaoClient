@@ -274,6 +274,7 @@ function searchChamp2(data_id, list){
 }
 var tableID;
 function loadProfile(){
+	page_Name = "profile";
 	$("#profSet").remove();
 	var profDiv = document.getElementById("profMain");
 	var profHead = document.getElementById("profHead");
@@ -319,6 +320,7 @@ function loadProfile(){
 // }
 
 function loadRanked(){
+	page_Name = "ranked";
 	var champPlayed = "";
 	var totalGames = 0;
 	if(ranked_on === false){
@@ -344,6 +346,7 @@ function loadRanked(){
 var win_loss;
 function loadRecentMatches(){
 	//console.log("recent");
+	page_Name = "recent";
 	if(recent_on === false){
 		recent_on = true;
 		$("#recentContent").append('<div data-role = "collapsible-set" id = "recentSet" data-content-theme="b" id = "recentSet"></div>');
@@ -437,6 +440,7 @@ function findPlayerNames(id){
 
 var mastery_output;
 function loadMasteries(){
+	page_Name = "masteries";
 	if(masteries_on === false){
 		masteries_on = true;
 		$("#mastPageHeader").text('Choose a Mastery List');
@@ -473,6 +477,7 @@ function masteryManagement(){
 }
 
 function loadRunes(){
+	page_Name = "runes";
 	//recursive process to manage runes with different pages
 	//select menu of all rune pages
 	if(rune_on === false){
@@ -577,6 +582,7 @@ var keys = {};
 
 function shareToOmlet(event){
 	console.log("Sharing game!");
+	changeShareMessage(page_Name);
 	if( Omlet.isInstalled() )
 	{
 		// SaveGame();
@@ -584,7 +590,7 @@ function shareToOmlet(event){
                 noun: "game",
                 displayTitle: "League of LMAO",
                 displayThumbnailUrl: "http://mobi-summer-luke.s3.amazonaws.com/LeagueofLmaoClient/leagueoflmaothumbnail.png",
-                displayText: "Search for your favorite players! Look at player game data, check out champion rotations and patch updates, and learn all about League of Legends!",  
+                displayText: message,  
                 webCallback:  "http://mobi-summer-luke.s3.amazonaws.com/LeagueofLmaoClient/leagueofhtml.html",
                // json: gameState,
                 callback: encodeURI(window.location.href)
@@ -722,6 +728,28 @@ Omlet.ready(function() {
 		initDocument();
 	}
 } );
-
-
+var message;
+function changeShareMessage(key){
+	if(key == "runes"){
+		message = "Check out these Runes";
+	}
+	if(key == "masteries"){
+		message = "Check out these Masteries";
+	}
+	if(key == "recent"){
+		message = "Check out these Recent Games";
+	}
+	if(key == "ranked"){
+		message = "Check out these Ranked Stats";
+	}
+	if(key == "profile"){
+		message = "Check out "+ variableSummonerName + "'s profile";
+	}
+	if(key == "champs"){
+		message = "Check out this week's free champion rotation";
+	}
+	else{
+		message = "Search for your favorite players! Look at player game data, check out champion rotations and patch updates, and learn all about League of Legends!";
+	}
+}
 
